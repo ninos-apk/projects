@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segment Intersection</title>
+    <style>
+        body{
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas"></canvas>
+    <script>
+        myCanvas.width=window.innerWidth;
+        myCanvas.height=window.innerHeight;
+        const A = {x:50, y:100};
+        const B = {x:250, y:200};
+        const C = {x:50, y:100};
+        const D = {x:250, y:200};
+
+        ctx = myCanvas.getContext("2d");
+        let angle = 0;
+        let mouse = {x:0,y:0}
+
+        let isMouseDown = false;
+        document.onmousedown = (event) => {
+            isMouseDown = true;
+        };
+
+        document.onmouseup = (event) => {
+            isMouseDown = false;
+        };
+
+        document.onmousemove=(event)=>{
+            if(isMouseDown){
+                mouse.x=event.x;
+                mouse.y=event.y;
+            }
+        }
+
+        let t = 0 ;
+        animate();
+        function animate(){
+            const radius = 150;
+            A.x = mouse.x + Math.cos(angle)*radius;
+            A.y = mouse.y - Math.sin(angle)*radius;
+            B.x = mouse.x - Math.cos(angle)*radius;
+            B.y = mouse.y + Math.sin(angle)*radius;
+
+            angle += 0.002;
+            ctx.clearRect(0,0, myCanvas.width, myCanvas.height);
+            ctx.beginPath();
+            ctx.moveTo(A.x,A.y);
+            ctx.lineTo(B.x,B.y);
+            ctx.moveTo(C.x,C.y);
+            ctx.lineTo(D.x,D.y);
+            ctx.stroke();
+
+            drawDot(A,"A");
+            drawDot(B,"B");
+            drawDot(C,"C");
+            drawDot(D,"D");
+
+            const I = getIntersection(A,B,C,D);
+            if (I){
+                drawDot(I,"I");
+            }
+            
+            requestAnimationFrame(animate)
+        }
+
+    
+    function lerp(A, B, t){
+        return A + (B - A) * t;
+    }
+
+    function getIntersection(A,B,C,D){
+        /*
+        Ix = Ax + (Bx - Ax) t = Cx + (Dx - Cx) u
+        Iy = Ay + (By - Ay) t = Cy + (Dy - Cy) u
+
+        solving the equation after t will result in :
+        t = top / bottom 
+        where
+        top = (Dx-Cx)(Ay-Cy)-(Dy-Cy)(Ax-Cx)
+        bottom = (Dy-Cy)(Bx-Ax)-(Dx-Cx)(By-Ay)
+
+        we do the same for u
+        */
+       const ttop = (D.x-C.x)*(A.y-C.y)-(D.y-C.y)*(A.x-C.x);
+       const utop = (C.y-A.y)*(A.x-B.x)-(C.x-A.x)*(A.y-B.y);
+       const bottom = (D.y-C.y)*(B.x-A.x)-(D.x-C.x)*(B.y-A.y);
+       if(bottom !=0){
+            const t = ttop/bottom;
+            const u = utop/bottom;
+            if (t>=0 && t<=1 && u>=0 && u<=1){
+                return{
+                    x:lerp(A.x,B.x,t),
+                    y:lerp(A.y, B.y, t),
+                    offset:t
+                }
+            }
+        }
+        return null;
+    }
+
+    function drawDot(point,label, isRed=false){
+        ctx.beginPath();
+        ctx.fillStyle = isRed?"red":"white";
+        ctx.arc(point.x,point.y,10,0,Math.PI*2);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.font = "bold 14px Arial";
+        ctx.fillText(label,point.x,point.y);
+    }
+    </script>
+</body>
+</html>
