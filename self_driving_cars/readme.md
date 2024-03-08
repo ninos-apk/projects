@@ -8,3 +8,7 @@
 - Video 3: Implementing the sensors of the car (ray casting)
 - Video 4: standalone video explaining how intersection function works
 - Video 5: implementing collision detection, if the car meets the border of the road the car is damaged.
+
+## Video 6
+- Building the Neuralnetwork and its levels and connect it to the cars input
+- I need to read more about the neuralnetwork and read the code again to understand it more.
