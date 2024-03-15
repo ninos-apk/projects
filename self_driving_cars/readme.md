@@ -12,3 +12,8 @@
 ## Video 6
 - Building the Neuralnetwork and its levels and connect it to the cars input
 - I need to read more about the neuralnetwork and read the code again to understand it more.
+
+## Video 7 and 8
+- Visualizing the neuralnetwork  (Video 7)
+- Optimizing neuralnetwork and implementing genetic algorithm (Video 8)
+- Extend the neuralnetwork to have 10 inputs and 2 additional hidden layers (Done by me)
