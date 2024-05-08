@@ -13,7 +13,7 @@ let traffic = [];
 let y = -300;
 for (let i = 0; i < 10; i++) {
     lane = Math.floor(Math.random() * 3);
-    traffic.push(new Car(road.getLaneCenter(lane), y, 30, 50, "DUMMY", maxspeed = 2))
+    traffic.push(new Car(road.getLaneCenter(lane), y, 30, 50, "DUMMY", maxspeed = 2, color=getRandomColor()))
     y -= 200;
 }
 
@@ -21,13 +21,14 @@ for (let i = 0; i < 10; i++) {
     let lane1 = Math.floor(Math.random() * 3);
     let lane2 = Math.floor(Math.random() * 3);
     
-    traffic.push(new Car(road.getLaneCenter(lane1), y, 30, 50, "DUMMY", maxspeed = 2))
-    traffic.push(new Car(road.getLaneCenter(lane2), y, 30, 50, "DUMMY", maxspeed = 2))
+    traffic.push(new Car(road.getLaneCenter(lane1), y, 30, 50, "DUMMY", maxspeed = 2, color=getRandomColor()))
+    traffic.push(new Car(road.getLaneCenter(lane2), y, 30, 50, "DUMMY", maxspeed = 2, color=getRandomColor()))
     y -= 200;
 }
 let bestCar = cars[0];
 const bestBrain = localStorage.getItem("bestBrain");
 if (bestBrain) {
+    console.log(bestBrain)
     for (let i = 0; i < cars.length; i++){
         cars[i].brain = JSON.parse(bestBrain);
         if (i != 0) {
@@ -39,10 +40,40 @@ if (bestBrain) {
 animate();
 
 function save() {
-    localStorage.setItem("bestBrain", JSON.stringify(bestCar.brain));
+    jsonData = JSON.stringify(bestCar.brain);
+    localStorage.setItem("bestBrain", jsonData);
+    //create_json_file(jsonData)
 }
 function discard() {
     localStorage.removeItem("bestBrain");
+}
+
+function create_json_file(jsonData) {
+    
+    // Create a Blob object from the JSON data
+    var blob = new Blob([jsonData], { type: "application/json" });
+
+    // Create a URL for the Blob
+    var url = URL.createObjectURL(blob);
+    
+    // Create a link element
+    var a = document.createElement('a');
+    
+    // Set the link's attributes
+    a.href = url;
+    a.download = 'bestBrain.json'; // Set the desired filename here
+    
+    // Append the link to the document body
+    document.body.appendChild(a);
+    
+    // Click the link to trigger the download
+    a.click();
+    
+    // Remove the link from the document body
+    document.body.removeChild(a);
+    
+    // Revoke the URL to free up memory
+    URL.revokeObjectURL(url);
 }
 
 function generateCars(N) {
@@ -71,11 +102,11 @@ function animate(time) {
 
     road.draw(carCtx);
     for (let c = 0; c < traffic.length;c++) {
-        traffic[c].draw(carCtx, "orange");
+        traffic[c].draw(carCtx);
     }
     carCtx.globalAlpha = 0.2;
     for (let i = 0; i < cars.length; i++) {
-        cars[i].draw(carCtx, "blue");
+        cars[i].draw(carCtx);
     }
     carCtx.globalAlpha = 1;
     bestCar.draw(carCtx, "blue",true);
