@@ -7,6 +7,11 @@ class Graph{
     addPoint(point) {
         this.points.push(point);
     }
+    removePoint(point) {
+        const segs = this.getSegmentsWithPoint(point);
+        for (const seg of segs) { this.removeSegment(seg); }
+        this.points.splice(this.points.indexOf(point), 1);
+    }
 
     addSegment(seg) {
         this.segments.push(seg);
@@ -30,12 +35,6 @@ class Graph{
 
     removeSegment(seg) {
         this.segments.splice(this.segments.indexOf(seg), 1);
-    }
-
-    removePoint(point) {
-        const segs = this.getSegmentsWithPoint(point);
-        for (const seg of segs) { this.removeSegment(seg); }
-        this.points.splice(this.points.indexOf(point), 1);
     }
 
     getSegmentsWithPoint(point) {
