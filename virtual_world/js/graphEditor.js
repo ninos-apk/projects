@@ -2,20 +2,23 @@ class GraphEditor {
     constructor(viewport, graph) {
         this.viewport = viewport;
         this.canvas = viewport.canvas;
+        this.ctx = this.canvas.getContext("2d");
+
         this.graph = graph; 
+
         this.selected = null; 
         this.hovered = null;
         this.dragging = false;
         this.mouse = null;
-        this.ctx = this.canvas.getContext("2d");
+
         this.#addEventListeners();
     }
 
     #addEventListeners() {
         this.canvas.addEventListener("mousedown", this.#handleMouseDown.bind(this));
         this.canvas.addEventListener("mousemove", this.#handleMouseMove.bind(this));
+        this.canvas.addEventListener("mouseup", (_) => this.dragging = false);
         this.canvas.addEventListener("contextmenu", (evt) => evt.preventDefault());
-        this.canvas.addEventListener("mouseup", this.#handleMouseUp.bind(this));
     }
 
     #removePoint(point) {
@@ -63,10 +66,6 @@ class GraphEditor {
             this.selected.x = this.mouse.x;
             this.selected.y = this.mouse.y;
         }
-    }
-
-    #handleMouseUp(evt) {
-        this.dragging = false
     }
 
     display() {
