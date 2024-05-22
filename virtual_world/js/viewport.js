@@ -3,7 +3,7 @@ class Viewport{
         this.canvas = canvas; 
         this.ctx = canvas.getContext("2d");
 
-        this.zoom = 1;
+        this.zoom = 2;
         this.center = new Point(canvas.width / 2, canvas.height / 2);
         this.offset = scale(this.center, -1);
 
@@ -52,8 +52,7 @@ class Viewport{
         const dir = Math.sign(evt.deltaY);
         const step = 0.1;
         this.zoom += dir * step;
-        this.zoom = Math.max(0.5, Math.min(5, this.zoom));
-        console.log("mousewheel");
+        this.zoom = Math.max(0.5, Math.min(10, this.zoom));
     }
     #handleMouseDown(evt) {
         if (evt.button == 1) { // click middle button
