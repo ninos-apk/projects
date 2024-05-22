@@ -12,18 +12,18 @@
     </style>
 </head>
 <body>
-    <canvas id="myCanvas"></canvas>
+    <canvas id="myCanvas" style="background-color: rgba(0,0,0,0.2);"></canvas>
     <script>
         myCanvas.width=window.innerWidth;
         myCanvas.height=window.innerHeight;
         const A = {x:50, y:100};
         const B = {x:250, y:200};
-        const C = {x:50, y:100};
-        const D = {x:250, y:200};
+        const C = {x:100, y:200};
+        const D = {x:350, y:400};
 
         ctx = myCanvas.getContext("2d");
         let angle = 0;
-        let mouse = {x:0,y:0}
+        let mouse = {x:100,y:100}
 
         let isMouseDown = false;
         document.onmousedown = (event) => {
