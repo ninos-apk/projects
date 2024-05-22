@@ -63,12 +63,16 @@ class Graph{
         this.segments.length = 0; 
     }
 
+    hash() {
+        return JSON.stringify(this);
+    }
+
     draw(ctx) {
         for (const seg of this.segments) {
-            seg.draw(ctx);
+            seg.draw(ctx, {color:"rgba(0,0,0,0.4)"});
         }
         for (const point of this.points) {
-            point.draw(ctx);
+            point.draw(ctx, {color:"rgba(0,0,0,0.4)"});
         }
     }
 }

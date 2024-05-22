@@ -31,6 +31,21 @@ class Polygon{
         }
     }
 
+    intersectsPoly(poly) {
+        for (let s1 of this.segments) {
+            for (let s2 of poly.segments) {
+                if (getIntersection(s1.p1, s1.p2, s2.p1, s2.p2)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    distanceToPoint(point) {
+        return Math.min(...this.segments.map((s) => s.distanceToPoint(point)));
+    }
+
     static break(poly1, poly2) {
         const segs1 = poly1.segments;
         const segs2 = poly2.segments;
@@ -88,6 +103,10 @@ class Polygon{
             }
         }
         return intersectionCount % 2 == 1;
+    }
+
+    distanceToPoly(poly) {
+        return Math.min(...this.points.map((p) => poly.distanceToPoint(p)));
     }
 
     drawSegments(ctx) {

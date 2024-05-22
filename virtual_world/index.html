@@ -12,7 +12,7 @@
             <button onclick="save()"> 💾 </button>
             <label class="switch">
                 <span style="color:white;">Show Editor</span>
-                <input type="checkbox" onclick="toggleEditor()" id="editorToggle" name="editorVisibility">
+                <input type="checkbox" onclick="toggleEditor()" id="editorToggle" name="editorVisibility" checked>
             </label>
         </div>
         <script src="js/world.js"></script>
@@ -27,7 +27,7 @@
         <script>
             myCanvas.width = 600;
             myCanvas.height = 600;
-            let editorVisible = false;
+            let editorVisible = true;
             const ctx = myCanvas.getContext("2d");
             const graphString = localStorage.getItem("graph");
             const graphInfo = graphString? JSON.parse(graphString):null;
@@ -35,10 +35,14 @@
             const world = new World(graph);
             const viewport = new Viewport(myCanvas);
             const graphEditor = new GraphEditor(viewport,graph);
+            let oldGraphHash = graph.hash();
             animate();
             function animate(){
                 viewport.reset();
-                world.generate();
+                if(oldGraphHash!=graph.hash()){
+                    world.generate();
+                    oldGraphHash = graph.hash();
+                }
                 world.draw(ctx);
                 ctx.globalAlpha = 0.7;
                 if(editorVisible){

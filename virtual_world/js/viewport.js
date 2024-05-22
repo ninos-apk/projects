@@ -53,6 +53,7 @@ class Viewport{
         const step = 0.1;
         this.zoom += dir * step;
         this.zoom = Math.max(0.5, Math.min(5, this.zoom));
+        console.log("mousewheel");
     }
     #handleMouseDown(evt) {
         if (evt.button == 1) { // click middle button
