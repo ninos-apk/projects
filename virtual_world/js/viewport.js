@@ -97,8 +97,8 @@ class Viewport{
             const distanceChange = touchMoveDistance - this.touchStartDistance;
             
             // Determine the direction of the zoom based on distance change
-            const dir = Math.sign(distanceChange);
-            const step = 0.01; // Adjust zoom sensitivity as needed
+            const dir = -Math.sign(distanceChange);
+            const step = 0.05; // Adjust zoom sensitivity as needed
             
             this.zoom += dir * step;
             this.zoom = Math.max(0.5, Math.min(10, this.zoom));
