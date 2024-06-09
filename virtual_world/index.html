@@ -38,6 +38,7 @@
                 canvas.height = height;
             }
             resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
 
             let editorVisible = true;
             const ctx = myCanvas.getContext("2d");
