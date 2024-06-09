@@ -8,7 +8,15 @@ body{
     overflow: hidden;
 }
 
-h1 {
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 90%;
+}
+
+h1 , h2{
     color: white;
     font-family: Arial;
 

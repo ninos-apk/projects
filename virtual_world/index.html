@@ -2,18 +2,23 @@
 <html>
     <head>
         <title>World Editor</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="style.css"/>
     </head>
     <body>
-        <h1>World Editor</h1>
+        <div class="container">
+        <h2>World Editor</h2>
         <canvas id="myCanvas"></canvas>
         <div id="controls">
             <button onclick="dispose()">🗑️</button>
             <button onclick="save()"> 💾 </button>
+            <button onclick="removeSelectedPoint()">Delete Selected Point</button>
             <label class="switch">
                 <span style="color:white;">Show Editor</span>
                 <input type="checkbox" onclick="toggleEditor()" id="editorToggle" name="editorVisibility" checked>
             </label>
+        </div>
         </div>
         <script src="js/world.js"></script>
         <script src="js/math/graph.js"></script>
@@ -77,6 +82,15 @@
 
             function toggleEditor() {
             editorVisible = !editorVisible; 
+            }
+            function removeSelectedPoint(){
+                if(graphEditor.selected){
+                    graphEditor.graph.removePoint(graphEditor.selected);
+                    graphEditor.hovered = null;
+                    if (graphEditor.selected == graphEditor.selected) {
+                        graphEditor.selected = null;
+                    }
+                }
             }
         </script>
     </body>

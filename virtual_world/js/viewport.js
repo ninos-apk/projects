@@ -36,6 +36,15 @@ class Viewport{
         return subtractDragOffset ? subtract(p, this.drag.offset) : p;
     }
 
+    getTouchPoint(evt, subtractDragOffset = false) {
+        const touch = evt.touches[0];
+        const p = new Point(
+            (touch.clientX - this.center.x) * this.zoom - this.offset.x,
+            (touch.clientY - this.center.y) * this.zoom - this.offset.y
+        );
+        return subtractDragOffset ? subtract(p, this.drag.offset) : p;
+    }
+
     getOffset() {
         return add(this.offset, this.drag.offset);
     }
@@ -45,9 +54,27 @@ class Viewport{
         this.canvas.addEventListener("mousedown", this.#handleMouseDown.bind(this));
         this.canvas.addEventListener("mouseup", this.#handleMouseUp.bind(this));
         this.canvas.addEventListener("mousemove", this.#handleMouseMove.bind(this));
-
+        this.canvas.addEventListener("touchstart", this.#handleTouchStart.bind(this));
+        this.canvas.addEventListener("touchend", this.#handleTouchEnd.bind(this));
+        this.canvas.addEventListener("touchmove", this.#handleTouchMove.bind(this));
     }
 
+    #handleTouchStart(evt){
+     
+        this.drag.start = this.getTouchPoint(evt);
+        this.drag.active = true;
+    }
+
+    #handleTouchEnd(evt){
+        this.#handleMouseUp(evt);
+
+    }
+    #handleTouchMove(evt){
+        if (this.drag.active) {
+            this.drag.end = this.getTouchPoint(evt);
+            this.drag.offset = subtract(this.drag.end, this.drag.start);
+        }
+    }
     #handleMouseWheel(evt) {
         const dir = Math.sign(evt.deltaY);
         const step = 0.1;
