@@ -14,6 +14,8 @@ class Viewport{
             active: false
         }
 
+        this.touchStartDistance = 0;
+
         this.#addEventListeners();
 
     }
@@ -60,19 +62,41 @@ class Viewport{
     }
 
     #handleTouchStart(evt){
-     
-        this.drag.start = this.getTouchPoint(evt);
-        this.drag.active = true;
+        if(evt.touches.length==1){
+            this.drag.start = this.getTouchPoint(evt);
+            this.drag.active = true;
+        }
+        if(evt.touches.length==2){
+            this.touchStartDistance = this.#getTouchDistance(evt.touches);
+        }
+    }
+    #getTouchDistance(touches) {
+        const [touch1, touch2] = touches;
+        const dx = touch2.clientX - touch1.clientX;
+        const dy = touch2.clientY - touch1.clientY;
+        return Math.sqrt(dx * dx + dy * dy);
     }
 
     #handleTouchEnd(evt){
         this.#handleMouseUp(evt);
-
+        if (evt.touches.length < 2) {
+            // Reset touch distance when less than two touches are detected
+            this.touchStartDistance = 0;
+        }
     }
     #handleTouchMove(evt){
         if (this.drag.active) {
             this.drag.end = this.getTouchPoint(evt);
             this.drag.offset = subtract(this.drag.end, this.drag.start);
+        }
+        if (evt.touches.length === 2) {
+            const touchMoveDistance = this.#getTouchDistance(evt.touches);
+            const distanceChange = touchMoveDistance - this.touchStartDistance;
+            const step = 0.01; // Adjust zoom sensitivity as needed
+            this.zoom += distanceChange * step;
+            this.zoom = Math.max(0.5, Math.min(10, this.zoom));
+            this.touchStartDistance = touchMoveDistance;
+            // Redraw or update canvas here based on new zoom level
         }
     }
     #handleMouseWheel(evt) {
