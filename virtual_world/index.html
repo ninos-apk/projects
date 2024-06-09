@@ -19,14 +19,26 @@
         <script src="js/math/graph.js"></script>
         <script src="js/math/utils.js"></script>
         <script src="js//viewport.js"></script>
+        <script src="js/items/tree.js"></script>
+        <script src="js/items/building.js"></script>
         <script src="js//graphEditor.js"></script>
         <script src="js/primitives/point.js"></script>
         <script src="js/primitives/segment.js"></script>
         <script src="js/primitives/polygon.js"></script>
         <script src="js/primitives/envelope.js"></script>
         <script>
-            myCanvas.width = 1700;
-            myCanvas.height = 800;
+            function resizeCanvas(){
+                const canvas = document.getElementById('myCanvas');
+
+                // Set canvas width and height to 80% of the viewport's width and height
+                const width = document.documentElement.clientWidth * 0.9;
+                const height = document.documentElement.clientHeight *0.9;
+
+                canvas.width = width;
+                canvas.height = height;
+            }
+            resizeCanvas();
+
             let editorVisible = true;
             const ctx = myCanvas.getContext("2d");
             const graphString = localStorage.getItem("graph");
@@ -43,7 +55,8 @@
                     world.generate();
                     oldGraphHash = graph.hash();
                 }
-                world.draw(ctx);
+                const viewPoint = scale(viewport.getOffset(), -1);
+                world.draw(ctx, viewPoint);
                 ctx.globalAlpha = 0.7;
                 if(editorVisible){
                     graphEditor.display();
