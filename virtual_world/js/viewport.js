@@ -90,13 +90,20 @@ class Viewport{
             this.drag.offset = subtract(this.drag.end, this.drag.start);
         }
         if (evt.touches.length === 2) {
+            // Prevent default behavior to avoid unintended scrolling
+            evt.preventDefault();
+            
             const touchMoveDistance = this.#getTouchDistance(evt.touches);
             const distanceChange = touchMoveDistance - this.touchStartDistance;
+            
+            // Determine the direction of the zoom based on distance change
+            const dir = Math.sign(distanceChange);
             const step = 0.01; // Adjust zoom sensitivity as needed
-            this.zoom += distanceChange * step;
+            
+            this.zoom += dir * step;
             this.zoom = Math.max(0.5, Math.min(10, this.zoom));
             this.touchStartDistance = touchMoveDistance;
-            // Redraw or update canvas here based on new zoom level
+            
         }
     }
     #handleMouseWheel(evt) {
