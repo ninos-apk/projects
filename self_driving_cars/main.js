@@ -1,11 +1,7 @@
 const carCanvas = document.getElementById("carCanvas");
-carCanvas.width = 250;
 const carCtx = carCanvas.getContext("2d");
-
 const networkCanvas = document.getElementById("networkCanvas");
-networkCanvas.width = 300;
 const networkCtx = networkCanvas.getContext("2d");
-
 const road = new Road(carCanvas.width / 2, carCanvas.width * 0.9, laneCount = 3);
 const N = 100;
 const cars = generateCars(N);
@@ -28,9 +24,26 @@ for (let i = 0; i < 10; i++) {
 let bestCar = cars[0];
 const bestBrain = localStorage.getItem("bestBrain");
 if (bestBrain) {
-    console.log(bestBrain)
+    console.log("best Brain Found in Local Storage")
     for (let i = 0; i < cars.length; i++){
         cars[i].brain = JSON.parse(bestBrain);
+        if (i != 0) {
+            NeuralNetwork.mutate(cars[i].brain, 0.1);
+        }
+    }
+}
+else{
+    console.log("Default best Brains loaded")
+    const bestBrain =  JSON.stringify(bestBrainData);
+    const bestBrain2 = JSON.stringify(bestBrainData2);
+    for (let i = 0; i < cars.length / 2; i++){
+        cars[i].brain = JSON.parse(bestBrain);
+        if (i != 0) {
+            NeuralNetwork.mutate(cars[i].brain, 0.1);
+        }
+    }
+    for (let i = cars.length / 2; i < cars.length; i++){
+        cars[i].brain = JSON.parse(bestBrain2);
         if (i != 0) {
             NeuralNetwork.mutate(cars[i].brain, 0.1);
         }
@@ -42,38 +55,9 @@ animate();
 function save() {
     jsonData = JSON.stringify(bestCar.brain);
     localStorage.setItem("bestBrain", jsonData);
-    //create_json_file(jsonData)
 }
 function discard() {
     localStorage.removeItem("bestBrain");
-}
-
-function create_json_file(jsonData) {
-    
-    // Create a Blob object from the JSON data
-    var blob = new Blob([jsonData], { type: "application/json" });
-
-    // Create a URL for the Blob
-    var url = URL.createObjectURL(blob);
-    
-    // Create a link element
-    var a = document.createElement('a');
-    
-    // Set the link's attributes
-    a.href = url;
-    a.download = 'bestBrain.json'; // Set the desired filename here
-    
-    // Append the link to the document body
-    document.body.appendChild(a);
-    
-    // Click the link to trigger the download
-    a.click();
-    
-    // Remove the link from the document body
-    document.body.removeChild(a);
-    
-    // Revoke the URL to free up memory
-    URL.revokeObjectURL(url);
 }
 
 function generateCars(N) {

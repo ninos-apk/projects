@@ -16,4 +16,3 @@
 ## Video 7 and 8
 - Visualizing the neuralnetwork  (Video 7)
 - Optimizing neuralnetwork and implementing genetic algorithm (Video 8)
-- Extend the neuralnetwork to have 10 inputs and 2 additional hidden layers (Done by me)

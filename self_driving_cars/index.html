@@ -1,21 +1,35 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Self-driving car - no libraries</title>
     <link rel="stylesheet" href="style.css">
-    <body>
-        <canvas id="carCanvas"></canvas>
-        <div id="verticalButtons">
-            <button id="save" onclick="save()">💾 </button>
-            <button id="discard" onclick="discard()">❌</button>
-        </div>
-        <canvas id="networkCanvas"></canvas>
-        <script src="visualizer.js"></script>
-        <script src="network.js"></script>
-        <script src="sensor.js"></script>
-        <script src="utils.js"></script>
-        <script src="road.js"></script>
-        <script src="controls.js"></script>
-        <script src="car.js"></script>
-        <script src="main.js"></script>
-    </body>
 </head>
+<body>
+    <div class="mainContainer">
+        <div class="carCanvasDiv">
+            <canvas id="carCanvas"></canvas>
+        </div>
+        <div class="rightDiv">
+            <div class="verticalButtons">
+                <button id="save" onclick="save()">💾 </button>
+                <button id="discard" onclick="discard()">❌</button>
+            </div>
+            <div class="networkCanvasDiv">
+                <canvas id="networkCanvas"></canvas>
+            </div>
+        </div>
+
+    </div>
+    <script src="visualizer.js"></script>
+    <script src="network.js"></script>
+    <script src="sensor.js"></script>
+    <script src="utils.js"></script>
+    <script src="road.js"></script>
+    <script src="controls.js"></script>
+    <script src="car.js"></script>
+    <script src="bestBrain.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

@@ -24,7 +24,7 @@ class Visualizer{
         const right = left + width;
         const bottom = top + height;
         const { inputs, outputs, weights, biases } = level;
-        const nodeRadius = 17;
+        const nodeRadius = 15;
         for (let i = 0; i < inputs.length; i++){
             for (let j = 0; j < outputs.length; j++){
                 ctx.beginPath();
