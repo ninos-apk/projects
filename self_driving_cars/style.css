@@ -65,6 +65,11 @@ align-items: center;
         width: 90%;
         height: 100%;
     }
+
+    #save ,#discard{
+        width:40%;
+        font-size: 4vb;
+    }
     
   }
 
@@ -76,10 +81,14 @@ display: flex;
 align-items: center;
 justify-content: space-around;
 }
-#save, #discard{
+#save , #discard{
+    width: 40%;
     border-radius: 10%;
     font-size: 4vb;
-    background-color: rgba(255, 255, 255, 0.678)
+    background-color: rgba(255, 255, 255, 0.678);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 #save:hover{
     background-color: greenyellow;
