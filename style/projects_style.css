@@ -1,0 +1,36 @@
+.navbar ul li a .text-projects{
+    opacity: 1;
+}
+.navbar ul li a .projects{
+    transform: translateY(-25px);
+}
+.project-list ul li{
+    list-style: none;
+}
+.mainContainer.project-mainContainer{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.project-list ul{
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-areas:
+    'one one two two'
+    'three three three three'
+    ;
+}
+
+.selfdrivingcar{
+    grid-area: one;
+}
+
+.virtualworld{
+    grid-area: two;
+}
+.submain{
+    grid-area: three;
+}
