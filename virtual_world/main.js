@@ -21,8 +21,17 @@ if(!graphInfo){
 const graph = graphInfo? Graph.load(graphInfo): new Graph();
 const world = new World(graph);
 const viewport = new Viewport(myCanvas);
-const graphEditor = new GraphEditor(viewport,graph);
+
+tools = {
+  graph: {button: graphBtn, editor:new GraphEditor(viewport,graph), display:false},
+  stop: {button: stopBtn, editor: new StopEditor(viewport,world), display:false},
+  crossing: {button: crossingBtn, editor: new CrossingEditor(viewport,world), display:false},
+  start: {button: startBtn, editor: new StartEditor(viewport,world), display:false}  
+};
+
 let oldGraphHash = graph.hash();
+
+setMode("graph");
 animate();
 function animate(){
     viewport.reset();
@@ -33,27 +42,46 @@ function animate(){
     const viewPoint = scale(viewport.getOffset(), -1);
     world.draw(ctx, viewPoint);
     ctx.globalAlpha = 0.7;
-    if(editorVisible){
-        graphEditor.display();
+    for(const tool of Object.values(tools)){
+        if(tool.display){
+            tool.editor.display();
+        }
     }
     requestAnimationFrame(animate);
 }
 function dispose(){
-    graphEditor.dispose()
+    tools["graph"].editor.dispose()
+    world.markings.length = 0;
 }
 function save(){
     localStorage.setItem("graph", JSON.stringify(graph))
 }
 
-function toggleEditor() {
-editorVisible = !editorVisible; 
-}
 function removeSelectedPoint(){
+    graphEditor = tools["graph"].editor
     if(graphEditor.selected){
-        graphEditor.graph.removePoint(graphEditor.selected);
+        graphEditor.hovered =  graphEditor.selected
+        graphEditor.selected = null;
+        return;
+    }
+    if(graphEditor.hovered){
+        graphEditor.graph.removePoint(graphEditor.hovered);
         graphEditor.hovered = null;
-        if (graphEditor.selected == graphEditor.selected) {
-            graphEditor.selected = null;
-        }
+    }
+}
+
+function setMode(mode){
+    disableEditors();
+    tools[mode].button.style.backgroundColor = "white";
+    tools[mode].button.style.filter = "";
+    tools[mode].editor.enable();
+    tools[mode].display = true;
+}
+function disableEditors(){
+    for(tool of Object.values(tools)){
+        tool.button.style.backgroundColor = "gray";
+        tool.button.style.filter = "grayscale(100%)";
+        tool.editor.disable();
+        tool.display = false;
     }
 }

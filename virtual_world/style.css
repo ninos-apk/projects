@@ -26,3 +26,10 @@ h1 , h2{
 #myCanvas{
     background-color: rgb(127, 255, 127);
 }
+button{
+    background-color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

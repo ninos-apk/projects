@@ -17,7 +17,7 @@ class Viewport{
         this.touchStartDistance = 0;
 
         this.#addEventListeners();
-
+        this.stopTouchMove = false;
     }
 
     reset() {
@@ -39,10 +39,13 @@ class Viewport{
     }
 
     getTouchPoint(evt, subtractDragOffset = false) {
-        const touch = evt.touches[0];
+        const touch = evt.touches[0]
+        const rect = this.canvas.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
         const p = new Point(
-            (touch.clientX - this.center.x) * this.zoom - this.offset.x,
-            (touch.clientY - this.center.y) * this.zoom - this.offset.y
+            (x - this.center.x) * this.zoom - this.offset.x,
+            (y - this.center.y) * this.zoom - this.offset.y
         );
         return subtractDragOffset ? subtract(p, this.drag.offset) : p;
     }
@@ -85,6 +88,7 @@ class Viewport{
         }
     }
     #handleTouchMove(evt){
+        if(this.stopTouchMove){return;}
         if (this.drag.active) {
             this.drag.end = this.getTouchPoint(evt);
             this.drag.offset = subtract(this.drag.end, this.drag.start);
