@@ -14,8 +14,8 @@
 }
 
 .project-list ul{
-    margin: 0;
-    padding: 0;
+    margin: 5px;
+    padding: 5px;
     display: grid;
     gap: 1.5rem;
     grid-template-areas:

@@ -2,6 +2,22 @@ const carCanvas = document.getElementById("carCanvas");
 const carCtx = carCanvas.getContext("2d");
 const networkCanvas = document.getElementById("networkCanvas");
 const networkCtx = networkCanvas.getContext("2d");
+let CarCanvasHeight = 0;
+let CarCanvasWidth = 0;
+let NetworkCanvasHeight = 0;
+let NetworkCanvasWidth = 0;
+function resizeCanvas(){
+    let parent = document.querySelector('.carCanvasDiv');
+    CarCanvasWidth = parent.clientWidth;
+    CarCanvasHeight = parent.clientHeight;
+    parent = document.querySelector('.networkCanvasDiv');
+    NetworkCanvasWidth = parent.clientWidth;
+    NetworkCanvasHeight = parent.clientHeight;
+    carCanvas.width = CarCanvasWidth;
+    networkCanvas.width = NetworkCanvasWidth;
+}
+resizeCanvas();
+
 const road = new Road(carCanvas.width / 2, carCanvas.width * 0.9, laneCount = 3);
 const N = 100;
 const cars = generateCars(N);
@@ -78,10 +94,11 @@ function animate(time) {
     bestCar = cars.find(
         c => c.y == Math.min(...cars.map(c => c.y))
     );
-    carCanvas.height = window.innerHeight;
-    networkCanvas.height = window.innerHeight;
+ 
+    carCanvas.height = CarCanvasHeight;
+    networkCanvas.height = NetworkCanvasHeight;
     carCtx.save();
-   
+    
     carCtx.translate(0, -bestCar.y + carCanvas.height * 0.7);
 
     road.draw(carCtx);

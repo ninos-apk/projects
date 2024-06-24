@@ -34,7 +34,7 @@ const navbarHTML = `
     </li>
     <li class="list list-switch">
         <label class="switch">
-            <input id="mode-toggle" type="checkbox">
+            <input id="mode-toggle" type="checkbox" checked>
             <span class="slider round"></span>
         </label>
     </li>
@@ -49,16 +49,15 @@ document.addEventListener('DOMContentLoaded', function () {
     navPlaceholder.innerHTML = navbarHTML;
 
     const toggleSwitch = document.getElementById('mode-toggle');
-    // Check for saved mode in localStorage
-    if (localStorage.getItem('dark-mode') === 'enabled') {
+    if (toggleSwitch.checked && localStorage.getItem('dark-mode') === 'enabled') {
         document.body.classList.add('dark-mode');
-        toggleSwitch.checked = true;
+        localStorage.setItem('dark-mode', 'enabled');
         changeColor('white');
-    }else{
-        toggleSwitch.checked = false;
+    } else {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('dark-mode', 'disabled');
         changeColor('black');
     }
-
     toggleSwitch.addEventListener('change', function () {
         if (toggleSwitch.checked) {
             document.body.classList.add('dark-mode');
@@ -70,7 +69,15 @@ document.addEventListener('DOMContentLoaded', function () {
             changeColor('black');
         }
     });
-
+    // Check for saved mode in localStorage
+    if (localStorage.getItem('dark-mode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+        toggleSwitch.checked = true;
+        changeColor('white');
+    }else{
+        toggleSwitch.checked = false;
+        changeColor('black');
+    }
 });
 
 changeColor = (color) =>{

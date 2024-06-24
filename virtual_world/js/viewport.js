@@ -17,7 +17,7 @@ class Viewport{
         this.touchStartDistance = 0;
 
         this.#addEventListeners();
-        this.stopTouchMove = false;
+        this.disableViewportMove = false;
     }
 
     reset() {
@@ -88,7 +88,7 @@ class Viewport{
         }
     }
     #handleTouchMove(evt){
-        if(this.stopTouchMove){return;}
+        if(this.disableViewportMove){return;}
         if (this.drag.active) {
             this.drag.end = this.getTouchPoint(evt);
             this.drag.offset = subtract(this.drag.end, this.drag.start);

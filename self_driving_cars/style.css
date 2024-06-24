@@ -1,6 +1,4 @@
 html, body {
-    height: 100%;
-    width: 100%;
     margin: 0;
     padding: 0;
     background-color: rgba(184, 163, 144, 0.541);
@@ -8,92 +6,74 @@ html, body {
 }
 
 .mainContainer{
-    margin: auto;
-    padding: 0;
     background-color: rgba(0, 128, 0, 0.267);
-    width: 100%;
-    height: 100%;
+    height: 100svh;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+    gap: 10px;
 }
 
 
 .rightDiv{
     background-color: rgba(255, 255, 255, 0);
+    border: solid 2px;
     width: 45%;
-    height: 100%;
-    border-radius: 15px; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
     display: flex;
-    align-items: center;
-    justify-content: space-around;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .carCanvasDiv{
     background-color: grey;
-    width: 55%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-}
-#carCanvas{
-    width: 400px;
-    height: 100%;
+    width: 45%;
+    
 }
 
 .networkCanvasDiv{
-width: 98%;
-height: 80%;
 background-color: black;
-display: flex;
-justify-content: center;
-align-items: center;
+height: 80%;
+width: 100%;
 }
 
-#networkCanvas{
-    width: 500px;
-    height: 90%;
-}
+
 @media only screen and (max-width: 600px) {
     #networkCanvas {
-      width: 90%; /* full width on mobile */
-      height: 90%; /* smaller height on mobile */
     }
     #carCanvas{
-        width: 90%;
-        height: 100%;
     }
 
     #save ,#discard{
-        width:40%;
-        font-size: 4vb;
     }
     
   }
 
 .verticalButtons{
-width: 98%;
-height: 15%;
-order: 1;
-display: flex;
-align-items: center;
-justify-content: space-around;
-}
-#save , #discard{
-    width: 40%;
-    border-radius: 10%;
-    font-size: 4vb;
-    background-color: rgba(255, 255, 255, 0.678);
+    order:1;
+    height: 10%;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
+}
+#save , #discard{
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    border:none;
+}
+#save:active{
+    background-color: greenyellow;
+    cursor: pointer;
+}
+
+#discard:active{
+    background-color: brown;
+    cursor: pointer;
 }
 #save:hover{
-    background-color: greenyellow;
+    cursor: pointer;
 }
 
 #discard:hover{
-    background-color: brown;
+    cursor: pointer;
 }

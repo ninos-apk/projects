@@ -1,10 +1,7 @@
 function resizeCanvas(){
     const canvas = document.getElementById('myCanvas');
-
-    // Set canvas width and height to 80% of the viewport's width and height
     const width = window.innerWidth;
-    const height = window.innerHeight * 0.85;
-
+    const height = window.innerHeight*0.9;
     canvas.width = width;
     canvas.height = height;
 }

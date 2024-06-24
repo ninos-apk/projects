@@ -11,6 +11,7 @@ class GraphEditor {
         this.dragging = false;
         this.mouse = null;
         this.touch = null;
+        this.timeOut = false;
     }   
 
     enable(){
@@ -65,7 +66,19 @@ class GraphEditor {
         this.selected = point;
     }
 
+    #hoveredTouch(point) {
+        if (this.selected) {
+            this.graph.tryAddSegment(new Segment(this.selected, point));
+        }
+        this.selected = point;
+    }
+
     #handleMouseDown(evt) {
+        if(evt.touches == undefined){
+            return;
+        }else{
+            console.log("mouse down")
+        }
         if (evt.button == 2) {// right click
             if (this.selected) {
                 this.selected = null;
@@ -92,6 +105,11 @@ class GraphEditor {
     }
 
     #handleMouseMove(evt) {
+        if(evt.touches == undefined){
+            return;
+        }else{
+            console.log("mouse move")
+        }
         this.mouse = this.viewport.getMouse(evt, true);
         this.hovered = getNearestPoint(this.mouse, this.graph.points, 10 * this.viewport.zoom);
         if (this.dragging) {
@@ -102,24 +120,36 @@ class GraphEditor {
 
     #handleTouchStart(evt){
         this.touch = this.viewport.getTouchPoint(evt, true);
-        const p = getNearestPoint(this.touch, this.graph.points, 10 * this.viewport.zoom);
-        if(p && p.equals(this.selected)){
-            this.selected = null;
+        if(evt.touches.length > 1){
+            return;
         }
-
+        this.hovered = getNearestPoint(this.touch, this.graph.points, 10 * this.viewport.zoom);
+        if (this.hovered) {
+            this.dragging = true;
+            this.#select(this.hovered);
+        }
     }
 
     #handleTouchMove(evt){
         this.touch = this.viewport.getTouchPoint(evt, true);
-        if (this.selected) {
-            this.viewport.stopTouchMove = true;
+        setTimeout(() => {
+            this.timeOut = true;
+          }, 200);
+        if (this.dragging) {
+            this.viewport.disableViewportMove = true;
             this.selected.x = this.touch.x;
             this.selected.y = this.touch.y;
         }
     }
 
     #handleTouchEnd(evt){
-        this.viewport.stopTouchMove = false;
+        if(!this.dragging && !this.timeOut){
+            this.graph.addPoint(this.touch);
+            this.#select(this.touch);
+        }
+        this.dragging = false;
+        this.viewport.disableViewportMove = false;
+        this.timeOut = false;
     }
 
     display() {
@@ -128,7 +158,8 @@ class GraphEditor {
             this.hovered.draw(this.ctx, { outline: true });
         }
         if (this.selected) {
-            const intent = this.hovered ? this.hovered : this.mouse;
+            const input_method = this.mouse?this.mouse:this.touch;
+            const intent = this.hovered ? this.hovered : input_method;
             new Segment(this.selected, intent).draw(ctx, {color: "rgba(0,0,0,0.5)" ,dash:[3, 3]});
             this.selected.draw(this.ctx, { fill: true });
         }
