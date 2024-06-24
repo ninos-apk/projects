@@ -12,6 +12,7 @@ class GraphEditor {
         this.mouse = null;
         this.touch = null;
         this.timeOut = false;
+        this.touchActive = false;
     }   
 
     enable(){
@@ -66,18 +67,9 @@ class GraphEditor {
         this.selected = point;
     }
 
-    #hoveredTouch(point) {
-        if (this.selected) {
-            this.graph.tryAddSegment(new Segment(this.selected, point));
-        }
-        this.selected = point;
-    }
-
     #handleMouseDown(evt) {
-        if(evt.touches == undefined){
+        if(this.touchActive){
             return;
-        }else{
-            console.log("mouse down")
         }
         if (evt.button == 2) {// right click
             if (this.selected) {
@@ -102,13 +94,12 @@ class GraphEditor {
 
     #handleMouseUp(evt){
         this.dragging = false;
+        this.touchActive = false;
     }
 
     #handleMouseMove(evt) {
-        if(evt.touches == undefined){
+        if(this.touchActive){
             return;
-        }else{
-            console.log("mouse move")
         }
         this.mouse = this.viewport.getMouse(evt, true);
         this.hovered = getNearestPoint(this.mouse, this.graph.points, 10 * this.viewport.zoom);
@@ -119,6 +110,7 @@ class GraphEditor {
     }
 
     #handleTouchStart(evt){
+        this.touchActive = true;
         this.touch = this.viewport.getTouchPoint(evt, true);
         if(evt.touches.length > 1){
             return;
