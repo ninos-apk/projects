@@ -1,7 +1,7 @@
 function resizeCanvas(){
     const canvas = document.getElementById('myCanvas');
     const width = window.innerWidth;
-    const height = window.innerHeight*0.9;
+    const height = window.innerHeight*0.85;
     canvas.width = width;
     canvas.height = height;
 }
@@ -23,7 +23,11 @@ tools = {
   graph: {button: graphBtn, editor:new GraphEditor(viewport,graph), display:false},
   stop: {button: stopBtn, editor: new StopEditor(viewport,world), display:false},
   crossing: {button: crossingBtn, editor: new CrossingEditor(viewport,world), display:false},
-  start: {button: startBtn, editor: new StartEditor(viewport,world), display:false}  
+  start: {button: startBtn, editor: new StartEditor(viewport,world), display:false},
+  target: {button: targetBtn, editor: new TargetEditor(viewport,world), display:false} , 
+  parking: {button: parkingBtn, editor: new ParkingEditor(viewport,world), display:false} ,
+  yield: {button: yieldBtn, editor: new YieldEditor(viewport,world), display:false} ,
+  light: {button: lightBtn, editor: new LightEditor(viewport,world), display:false} 
 };
 
 let oldGraphHash = graph.hash();
