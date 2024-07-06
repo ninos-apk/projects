@@ -3,6 +3,7 @@ class Light extends Marking{
         super(center, directionVector, width, height);
         this.border = this.poly.segments[0];
         this.state = "off";
+        this.type = "light";
     }
 
     draw(ctx){

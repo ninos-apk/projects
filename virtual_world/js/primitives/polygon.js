@@ -9,6 +9,12 @@ class Polygon{
         }
     }
 
+    static load(info){
+        return new Polygon(
+            info.points.map((i)=>new Point(i.x,i.y))
+        );
+    }
+
     draw(ctx, { stroke = "blue", lineWidth = 2, fill = "rgba(0,0,255,0.3)", join = "miter" } = {}) {
         ctx.beginPath();
         ctx.fillStyle = fill;

@@ -23,6 +23,15 @@
                 <button id="targetBtn" onclick="setMode('target')">🎯</button>
                 <button onclick="dispose()">🗑️</button>
                 <button onclick="save()"> 💾 </button>
+                <label for="fileInput" class="file-input-lable">
+                    &#128193;
+                    <input 
+                    type="file"
+                    id="fileInput"
+                    accept=".world"
+                    onchange="load(event)"
+                    />
+                </label>
                 <button onclick="removeSelectedPoint()">⌫</button>
             </div>
         </div>
@@ -53,7 +62,6 @@
         <script src="js/primitives/segment.js"></script>
         <script src="js/primitives/polygon.js"></script>
         <script src="js/primitives/envelope.js"></script>
-        <script src="js/data.js"></script>
         <script src="main.js"></script>
     </body>
 </html>
