@@ -1,0 +1,67 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: rgba(184, 163, 144, 0.541);
+    overflow: hidden;
+}
+
+.mainContainer{
+    background-color: rgba(0, 128, 0, 0.267);
+    height: 100svh;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.rightDiv{
+    background-color: rgba(255, 255, 255, 0);
+    border: solid 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.carCanvasDiv{
+    background-color: rgba(15, 150, 75, 0.795);
+    flex-grow: 1;
+}
+
+.networkCanvasDiv{
+background-color: black;
+height: 80%;
+width: 100%;
+}
+
+.verticalButtons{
+    order:1;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+#save , #discard{
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    border:none;
+}
+#save:active{
+    background-color: greenyellow;
+    cursor: pointer;
+}
+
+#discard:active{
+    background-color: brown;
+    cursor: pointer;
+}
+#save:hover{
+    cursor: pointer;
+}
+
+#discard:hover{
+    cursor: pointer;
+}

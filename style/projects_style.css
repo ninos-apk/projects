@@ -16,12 +16,9 @@
 .project-list ul{
     margin: 5px;
     padding: 5px;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 1.5rem;
-    grid-template-areas:
-    'one one two two'
-    'three three three three'
-    ;
 }
 
 .selfdrivingcar{
