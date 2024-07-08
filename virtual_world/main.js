@@ -10,9 +10,10 @@ window.addEventListener('resize', resizeCanvas);
 
 let editorVisible = true;
 const ctx = myCanvas.getContext("2d");
-const worldString = localStorage.getItem("world");
-const worldInfo  = worldString? JSON.parse(worldString):null;
-let world = worldString? World.load(worldInfo): new World(new Graph());
+// const worldString = localStorage.getItem("world");
+// const worldInfo  = worldString? JSON.parse(worldString):null;
+// let world = worldString? World.load(worldInfo): new World(new Graph());
+
 const graph = world.graph;
 
 const viewport = new Viewport(myCanvas, world.zoom, world.offset);
@@ -111,4 +112,20 @@ function disableEditors(){
         tool.editor.disable();
         tool.display = false;
     }
+}
+function openOsmPanel(){
+    osmPanel.style.display = "block";
+}
+function closeOsmPanel(){
+    osmPanel.style.display = "none";
+}
+function parseOsmData(){
+    if(osmDataContainer.value == ""){
+        alert("Paste data first");
+        return;
+    }
+    const result = Osm.parseRoads(JSON.parse(osmDataContainer.value));
+    graph.points = result.points;
+    graph.segments = result.segments;
+    closeOsmPanel();
 }

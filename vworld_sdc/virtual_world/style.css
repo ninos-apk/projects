@@ -1,0 +1,69 @@
+body{
+    height: 100svh;
+    background-color: grey;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+h1 , h2, h3{
+    color: white;
+    font-family: Arial;
+}
+
+#myCanvas{
+    background-color: rgb(127, 255, 127);
+}
+#controls{
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+height: 10svh;
+gap: 5px;
+background-color:burlywood;
+}
+button{
+    font-size: large;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.file-input-lable{
+    font-size: large;
+    width: 35px;
+    height: 26px;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+input[type="file"]{
+    display: none;
+}
+#title-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: darkgrey;
+    height: 5svh;
+}
+#osmPanel{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: rgba(0,0,0,0.7);
+    padding: 5000px;
+}

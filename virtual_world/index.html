@@ -33,11 +33,21 @@
                     />
                 </label>
                 <button onclick="removeSelectedPoint()">⌫</button>
+                <button onclick="openOsmPanel()">🗺️</button>
+                <div id="osmPanel" style="display: none;">
+                    <textarea name="textMapArea" id="osmDataContainer"
+                    placeholder="Paste OSM data here" rows="10" cols="50"></textarea>
+                    <div>
+                        <button onclick="parseOsmData()">✔️</button>
+                        <button onclick="closeOsmPanel()">❌</button>
+                    </div>
+                </div>
             </div>
         </div>
         <script src="js/world.js"></script>
         <script src="js/math/graph.js"></script>
         <script src="js/math/utils.js"></script>
+        <script src="js/math/osm.js"></script>
         <script src="js/viewport.js"></script>
         <script src="js/markings/marking.js"></script>
         <script src="js/markings/start.js"></script>
@@ -62,6 +72,8 @@
         <script src="js/primitives/segment.js"></script>
         <script src="js/primitives/polygon.js"></script>
         <script src="js/primitives/envelope.js"></script>
+        <script src="saves/erbenheimmapgraaph.world"></script>
         <script src="main.js"></script>
     </body>
+    
 </html>

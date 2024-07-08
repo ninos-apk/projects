@@ -59,3 +59,11 @@ input[type="file"]{
     background-color: darkgrey;
     height: 5svh;
 }
+#osmPanel{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: rgba(0,0,0,0.7);
+    padding: 5000px;
+}

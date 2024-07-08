@@ -29,11 +29,16 @@ html, body {
 }
 
 .networkCanvasDiv{
-background-color: black;
+background-color: grey;
 height: 80%;
 width: 100%;
 }
-
+#networkCanvas{
+    background-color: black;
+}
+#miniMapCanvas{
+    background-color: grey;
+}
 .verticalButtons{
     order:1;
     height: 10%;
