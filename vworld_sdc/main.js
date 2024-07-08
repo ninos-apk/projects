@@ -18,10 +18,6 @@ if (isMobile) {
 }
 carCanvas.height = window.innerHeight;
 
-
-const worldString = localStorage.getItem("world");
-const worldInfo  = worldString? JSON.parse(worldString):null;
-const world = worldString? World.load(worldInfo): new World(new Graph());
 const graph = world.graph;
 
 const viewport = new Viewport(carCanvas, world.zoom, world.offset);

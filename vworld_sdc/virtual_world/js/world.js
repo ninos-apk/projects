@@ -268,7 +268,7 @@ class World{
         }
         const items = [...this.buildings, ...this.trees].filter(
             (i)=> i.base.distanceToPoint(viewPoint) < renderRadius
-        );git
+        );
         items.sort(
             (a,b)=>
                 b.base.distanceToPoint(viewPoint) - 
