@@ -30,6 +30,8 @@ html, body {
 
 .networkCanvasDiv{
 background-color: grey;
+display: flex;
+flex-direction: column;
 height: 80%;
 width: 100%;
 }
@@ -69,4 +71,12 @@ width: 100%;
 
 #discard:hover{
     cursor: pointer;
+}
+/* For mobile phones (up to 600px wide): */
+@media only screen and (max-width: 600px) {
+    /* Your mobile-specific styles go here */
+    /* For example: */
+    body {
+        font-size: 16px;
+    }
 }

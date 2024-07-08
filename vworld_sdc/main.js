@@ -7,9 +7,17 @@ const miniMapCanvas = document.getElementById("miniMapCanvas");
 miniMapCanvas.width = 300;
 miniMapCanvas.height = 200;
 const networkCtx = networkCanvas.getContext("2d");
- 
-carCanvas.height = window.innerHeight;
+const isMobile = window.matchMedia("(max-width: 600px)").matches;
 networkCanvas.height = window.innerHeight - 400;
+if (isMobile) {
+    networkCanvas.width = 200;
+    miniMapCanvas.width = networkCanvas.width;
+    networkCanvas.height = window.innerHeight - 400;
+    miniMapCanvas.height = window.innerHeight - networkCanvas.height - 200;
+    carCanvas.width = window.innerWidth - networkCanvas.width;
+}
+carCanvas.height = window.innerHeight;
+
 
 const worldString = localStorage.getItem("world");
 const worldInfo  = worldString? JSON.parse(worldString):null;
@@ -17,7 +25,7 @@ const world = worldString? World.load(worldInfo): new World(new Graph());
 const graph = world.graph;
 
 const viewport = new Viewport(carCanvas, world.zoom, world.offset);
-const miniMap = new MiniMap(miniMapCanvas, world.graph, 300);
+const miniMap = new MiniMap(miniMapCanvas, world.graph);
 
 const N = 100;
 const cars = generateCars(N);
