@@ -10,9 +10,9 @@ window.addEventListener('resize', resizeCanvas);
 
 let editorVisible = true;
 const ctx = myCanvas.getContext("2d");
-// const worldString = localStorage.getItem("world");
-// const worldInfo  = worldString? JSON.parse(worldString):null;
-// let world = worldString? World.load(worldInfo): new World(new Graph());
+const worldString = localStorage.getItem("world");
+const worldInfo  = worldString? JSON.parse(worldString):null;
+let world = worldString? World.load(worldInfo): new World(new Graph());
 
 const graph = world.graph;
 
