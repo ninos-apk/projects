@@ -5,10 +5,8 @@ html, body{
     background-color: antiquewhite;
 }
 .mainContainer{
-    height: 100%;
-    background-color: aliceblue;
-    display: grid;
-    gap: 1rem;
-    grid-template-rows: 0.01fr;
-    place-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }

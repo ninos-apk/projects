@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('body').style.opacity = 1
     const links = document.querySelectorAll('.nav-link');
     const contentDiv = document.getElementById('content');
-
     function loadContent(link) {
 
         // Remove styles from previously clicked link
@@ -26,6 +25,9 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(data => {
             contentDiv.innerHTML = data; // Replace the content
+            if(url === 'home.html'){
+                buildCalendar(contentDiv.querySelector('#calendar'));
+            }
             })
             .catch(error => {
             console.error('Error fetching the page:', error);
@@ -42,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const hash = window.location.hash.slice(1) || 'home.html'; // Get the hash from the URL
     loadContent(document.querySelector(`a[href="${hash}"]`));
-
     const toggleSwitch = document.getElementById('mode-toggle');
     if (toggleSwitch.checked && localStorage.getItem('dark-mode') === 'enabled') {
         document.body.classList.add('dark-mode');
