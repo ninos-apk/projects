@@ -10,9 +10,33 @@ draw.circle = (ctx, x, y, radius, options) =>{
     options.strokeStyle && ctx.stroke();
 }
 
+draw.line = (ctx, fromX, fromY, toX, toY, options) =>{
+    ctx.beginPath();
+    ctx.moveTo(fromX, fromY);
+    ctx.lineTo(toX, toY);
+    Object.assign(ctx, options);
+    ctx.stroke();
+}
+
 const color = {};
 color.normal = (hue) => `hsl(${hue}, 100%, 50%)`;
 color.dark = (hue) => `hsl(${hue}, 100%, 25%)`;
 color.darkest = (hue) => `hsl(${hue}, 100%, 10%)`;
 color.light = (hue) => `hsl(${hue}, 100%, 70%)`;
 color.lightest = (hue) => `hsl(${hue}, 100%, 90%)`;
+
+function resetCanvasContext(ctx) {
+    ctx.strokeStyle = "#000000";
+    ctx.fillStyle = "#000000";
+    ctx.lineWidth = 1;
+    ctx.lineCap = "butt";
+    ctx.lineJoin = "miter";
+    ctx.miterLimit = 10;
+    ctx.font = "10px sans-serif";
+    ctx.textAlign = "start";
+    ctx.textBaseline = "alphabetic";
+    ctx.direction = "inherit";
+    ctx.globalAlpha = 1.0;
+    ctx.globalCompositeOperation = "source-over";
+    ctx.setLineDash([]);
+}
