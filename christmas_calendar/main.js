@@ -4,6 +4,12 @@ drawItemFunctions[2] = drawBall;
 drawItemFunctions[3] = drawSock;
 drawItemFunctions[4] = drawCane;
 drawItemFunctions[5] = drawBow;
+drawItemFunctions[6] = drawBell;
+drawItemFunctions[7] = drawSnowBall;
+drawItemFunctions[8] = drawCandle;
+drawItemFunctions[9] = drawGlove;
+drawItemFunctions[10] = drawCandy;
+drawItemFunctions[11] = drawSnowFlake;
 function buildCalendar(div) {
     const cellSize = 150;
     for (let day = 1; day < 25; day++) {
@@ -17,11 +23,13 @@ function buildCalendar(div) {
                 canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
                 canvas.classList.toggle("flip");
                 setFlip(day,canvas.classList.contains("flip"));
+                rotateCanvasAnimation(canvas);             
             }
             else{
                 const message = "The day has not come yet! Please be patient and wait until it's time to open the door";
                 alert(message);
             }
+            colorCanvasAnimation(div);
         });
         canvas.addEventListener("transitionend", () => {
             fillCell(day, canvas);
@@ -101,3 +109,42 @@ function getFlip(index){
     }
     return false;
 }
+
+function rotateCanvasAnimation(canvas) {
+    let currentRotation = 0;
+    let currentStep = 0; 
+    const rotations = 10;
+        const animate = () => {
+      if (currentStep < rotations) {
+        canvas.classList.contains("flip") ? currentRotation += 180 : currentRotation = 0; 
+        canvas.style.transform = `rotateY(${currentRotation}deg)`;
+        currentStep++;
+  
+        requestAnimationFrame(animate);
+      }
+    };
+    requestAnimationFrame(animate);
+  }
+
+  function colorCanvasAnimation(div) {
+    const canvases = div.querySelectorAll('canvas');
+    canvases.forEach(canvas => {
+        let currentStep = 0; 
+        const rotations = 10;
+            const animate = () => {
+          if (currentStep < rotations) {
+            const hue = Math.random() * 360;
+            canvas.style.backgroundColor = color[Object.keys(color)[currentStep % Object.keys(color).length]](hue);
+            currentStep++;
+      
+            requestAnimationFrame(animate);
+          }
+        };
+    
+        requestAnimationFrame(animate);
+        setTimeout(() => {
+            const orginal_color = 'rgb(132, 174, 230)';
+            canvas.style.backgroundColor = orginal_color;
+        }, 2000);
+    })
+  }

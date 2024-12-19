@@ -3,7 +3,6 @@ function drawBow(ctx, x, y, size, hue){
     const left = y - size/2;
     const right = x + size/2;
     const bottom = y + size/2;
-    ctx.strokeRect(top, left, size, size);
 
     ctx.beginPath();
     ctx.fillStyle = color.normal(hue);

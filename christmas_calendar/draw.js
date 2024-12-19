@@ -10,6 +10,14 @@ draw.circle = (ctx, x, y, radius, options) =>{
     options.strokeStyle && ctx.stroke();
 }
 
+draw.ellipse = (ctx, x, y, xRadius, yRadius, options) => {
+    ctx.beginPath();
+    ctx.ellipse(x, y, xRadius, yRadius, 0, 0, Math.PI * 2);
+    Object.assign(ctx, options);
+    options.fillStyle && ctx.fill();
+    options.strokeStyle && ctx.stroke();
+}
+
 draw.line = (ctx, fromX, fromY, toX, toY, options) =>{
     ctx.beginPath();
     ctx.moveTo(fromX, fromY);
@@ -40,3 +48,4 @@ function resetCanvasContext(ctx) {
     ctx.globalCompositeOperation = "source-over";
     ctx.setLineDash([]);
 }
+
