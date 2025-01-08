@@ -1,7 +1,5 @@
 function drawCane(ctx, x, y, size, hue){
-    resetCanvasContext(ctx);
     const top = y - size/2;
-
     const width = size/2;
     const thickness = size * 0.1;
     const bottom = y + size/2;
@@ -18,6 +16,8 @@ function drawCane(ctx, x, y, size, hue){
     ctx.lineTo(arc.x + arc.radius, bottom);
     ctx.stroke();
     ctx.strokeStyle = color.dark(hue);
+    ctx.save();
     ctx.setLineDash([thickness, thickness]);
     ctx.stroke();
+    ctx.restore();
 }

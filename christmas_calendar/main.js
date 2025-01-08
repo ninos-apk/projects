@@ -10,25 +10,25 @@ drawItemFunctions[8] = drawCandle;
 drawItemFunctions[9] = drawGlove;
 drawItemFunctions[10] = drawCandy;
 drawItemFunctions[11] = drawSnowFlake;
+drawItemFunctions[12] = drawSlegde;
+drawItemFunctions[13] = drawTree;
+drawItemFunctions[14] = drawHat;
+drawItemFunctions[15] = drawCalendar;
+drawItemFunctions[16] = drawPresent;
+drawItemFunctions[17] = drawCookie;
+drawItemFunctions[18] = drawGlobe;
+drawItemFunctions[19] = drawBells;
+drawItemFunctions[20] = drawSnowMan;
 function buildCalendar(div) {
     const cellSize = 150;
     for (let day = 1; day < 25; day++) {
         const canvas = document.createElement("canvas");
         if(getFlip(day))canvas.classList.add("flip");
         canvas.addEventListener("click", () => {
-            const currentDate = Date.now();
-            const clickedDate = new Date(currentDate);
-            clickedDate.setDate(day);
-            if(currentDate >= clickedDate.getTime()) {
-                canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
-                canvas.classList.toggle("flip");
-                setFlip(day,canvas.classList.contains("flip"));
-                rotateCanvasAnimation(canvas);             
-            }
-            else{
-                const message = "The day has not come yet! Please be patient and wait until it's time to open the door";
-                alert(message);
-            }
+            canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+            canvas.classList.toggle("flip");
+            setFlip(day,canvas.classList.contains("flip"));
+            rotateCanvasAnimation(canvas);             
             colorCanvasAnimation(div);
         });
         canvas.addEventListener("transitionend", () => {

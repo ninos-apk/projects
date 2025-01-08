@@ -1,6 +1,6 @@
 function drawBow(ctx, x, y, size, hue){
-    const top = x - size/2;
-    const left = y - size/2;
+    const top = y - size/2;
+    const left = x - size/2;
     const right = x + size/2;
     const bottom = y + size/2;
 

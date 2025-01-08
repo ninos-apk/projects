@@ -32,6 +32,7 @@ color.dark = (hue) => `hsl(${hue}, 100%, 25%)`;
 color.darkest = (hue) => `hsl(${hue}, 100%, 10%)`;
 color.light = (hue) => `hsl(${hue}, 100%, 70%)`;
 color.lightest = (hue) => `hsl(${hue}, 100%, 90%)`;
+color.reverse = (hue) => (hue + 180) % 360;
 
 function resetCanvasContext(ctx) {
     ctx.strokeStyle = "#000000";
