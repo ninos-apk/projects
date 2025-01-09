@@ -1,5 +1,5 @@
 function drawBall(ctx, x, y, size, hue) {
-    const top = x - size / 2;
+    const top = y - size / 2;
     const ring = {
         radius: size * 0.1,
         x,

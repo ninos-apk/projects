@@ -1,7 +1,4 @@
-function drawSnowFlake(ctx, x, y, size, hue){
-    const top = y - size/2;
-    const left = x - size/2;
-
+function drawSnowFlake(ctx, x, y, size, hue, pattern = [1,1,1,1,1,1]){
     ctx.lineWidth = size * 0.05;
     ctx.strokeStyle = color.normal(hue);
 
@@ -10,7 +7,7 @@ function drawSnowFlake(ctx, x, y, size, hue){
 
     ctx.translate(x,y);
     for(let i = 0; i<6; i++){
-        drawBranch(ctx, 0, 0, size);
+        pattern[i] && drawBranch(ctx, 0, 0, size);
         ctx.rotate(Math.PI/3);
     }
 
