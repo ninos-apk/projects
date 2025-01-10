@@ -6,41 +6,42 @@ html, body {
 }
 
 .mainContainer{
-    background-color: rgba(0, 128, 0, 0.267);
-    height: 100svh;
+    background-color: rgba(15, 150, 75, 0.795);
     display: flex;
-    gap: 10px;
     justify-content: center;
     align-items: center;
+    height: 100svh;
+    gap: 5px;
 }
-
 
 .rightDiv{
     background-color: rgba(255, 255, 255, 0);
-    border: solid 2px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 .carCanvasDiv{
     background-color: rgba(15, 150, 75, 0.795);
-    flex-grow: 1;
 }
 
 .networkCanvasDiv{
-background-color: grey;
 display: flex;
 flex-direction: column;
-height: 80%;
-width: 100%;
+justify-content: center;
 }
 #networkCanvas{
     background-color: black;
+    border-radius: 10px;
+    order: 2;
 }
 #miniMapCanvas{
-    background-color: grey;
+    background-color: rgb(56, 129, 66);
+    border-radius: 10px;
 }
+
 .verticalButtons{
     order:1;
     height: 10%;
@@ -49,6 +50,7 @@ width: 100%;
     justify-content: center;
     gap: 10px;
 }
+
 #save , #discard{
     font-size: 20px;
     width: 50px;
@@ -72,43 +74,17 @@ width: 100%;
 #discard:hover{
     cursor: pointer;
 }
-/* For mobile phones (up to 600px wide): */
-@media only screen and (max-width: 600px) {
-    /* Your mobile-specific styles go here */
-    /* For example: */
-    body {
-        font-size: 16px;
+@media screen and (max-width: 768px) {
+    .mainContainer{
+        flex-direction: column;
     }
-}
-#back-button {
-    display: inline-block;
-    margin: 10px;
-    text-align: center;
-    position: fixed;
-    top: 10px;
-    right: 10px;
-}
-
-#back-button a {
-    display: inline-block;
-    padding: 12px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    text-decoration: none;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-#back-button a:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-    cursor: pointer;
-}
-
-#back-button a:active {
-    background-color: #004085;
-    transform: translateY(0);
+    .networkCanvasDiv{
+        flex-direction: row;
+        gap: 10px;
+    }
+    .verticalButtons{
+        position: fixed;
+        top: 5px;
+        left: 5px;
+    }
 }

@@ -50,13 +50,24 @@
 
 
         update();
+
+        let isMouseDown = false;
+        document.onmousedown = (event) => {
+            isMouseDown = true;
+        }
+        document.onmouseup = (event) => {
+            isMouseDown = false;
+        }
         document.onmousemove = (event) => {
-            B.x = event.x - offset.x;
-            B.y = event.y - offset.y;
+            if (isMouseDown) {
+                B.x = event.x - offset.x;
+                B.y = event.y - offset.y;
 
-            C.x = B.x;
+                C.x = B.x;
 
-            update();
+                update();
+            }
+
         }
 
         document.ontouchmove = (event) => {

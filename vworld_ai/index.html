@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Self-driving car - no libraries</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style/back_button.css">
 </head>
 <body>
     <div id="back-button">
@@ -15,13 +16,13 @@
             <canvas id="carCanvas"></canvas>
         </div>
         <div class="rightDiv">
-            <div class="verticalButtons">
-                <button id="save" onclick="save()">💾 </button>
-                <button id="discard" onclick="discard()">❌</button>
-            </div>
             <div class="networkCanvasDiv">
                 <canvas id="networkCanvas"></canvas>
                 <canvas id="miniMapCanvas"></canvas>
+            </div>
+            <div class="verticalButtons">
+                <button id="save" onclick="save()">💾 </button>
+                <button id="discard" onclick="discard()">❌</button>
             </div>
         </div>
     </div>

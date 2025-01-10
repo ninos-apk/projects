@@ -31,10 +31,21 @@
         const point = { x: 90, y: 120 };
         const G = { x: 30, y: 80 };
         update();
+
+        let isMouseDown = false;
+        document.onmousedown = (event) => {
+            isMouseDown = true;
+        }
+        document.onmouseup = (event) => {
+            isMouseDown = false;
+        }
         document.onmousemove = (event) => {
-            point.x = event.x - offset.x;
-            point.y = event.y - offset.y;
-            update();
+            if (isMouseDown) {
+                point.x = event.x - offset.x;
+                point.y = event.y - offset.y;
+                update();
+            }
+
         }
 
         document.ontouchmove = (event) => {
@@ -182,8 +193,6 @@
             padding: 0;
             overflow: hidden;
             background-color: #eff8ff;
-            height: 100svh;
-            width: 100svw;
         }
     </style>
 </body>

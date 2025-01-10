@@ -4,27 +4,49 @@ back_button.addEventListener("click", function () {
 })
 
 const carCanvas = document.getElementById("carCanvas");
-carCanvas.width = window.innerWidth - 300;
 const carCtx = carCanvas.getContext("2d");
 const networkCanvas = document.getElementById("networkCanvas");
-networkCanvas.width = 300;
-const miniMapCanvas = document.getElementById("miniMapCanvas");
-miniMapCanvas.width = 300;
-miniMapCanvas.height = 200;
 const networkCtx = networkCanvas.getContext("2d");
-const isMobile = window.matchMedia("(max-width: 600px)").matches;
-networkCanvas.height = window.innerHeight - 400;
-if (isMobile) {
-    networkCanvas.width = 200;
-    miniMapCanvas.width = networkCanvas.width;
-    networkCanvas.height = window.innerHeight - 400;
-    miniMapCanvas.height = window.innerHeight - networkCanvas.height - 200;
-    carCanvas.width = window.innerWidth - networkCanvas.width;
+const miniMapCanvas = document.getElementById("miniMapCanvas");
+
+let screenSize = 'desktop';
+
+// Check if the screen width is less than or equal to 768px (common breakpoint for mobile)
+if (window.matchMedia("(max-width: 768px)").matches) {
+    screenSize = 'phone';
+}else{
+    if(window.matchMedia("(max-width: 1024px)").matches){
+        screenSize = 'ipad'
+    }
 }
-carCanvas.height = window.innerHeight;
+
+function setCanvasSize() {
+    if (screenSize === 'phone') {
+        carCanvas.width = window.innerWidth ;
+        networkCanvas.width = window.innerWidth * 0.5;
+        miniMapCanvas.width = window.innerWidth * 0.4;
+
+        carCanvas.height = window.innerHeight * 0.7;
+        networkCanvas.height = window.innerHeight * 0.3;
+        miniMapCanvas.height = window.innerHeight * 0.2;
+        return;
+    }
+    carCanvas.width = window.innerWidth * 0.8;
+    networkCanvas.width = window.innerWidth * 0.2;
+    miniMapCanvas.width = window.innerWidth * 0.2;
+
+    carCanvas.height = window.innerHeight;
+    networkCanvas.height = window.innerHeight * 0.6;
+    miniMapCanvas.height = window.innerHeight * 0.3;
+}
+
+setCanvasSize();
+
+window.addEventListener("resize", function () {
+    setCanvasSize();
+});
 
 const graph = world.graph;
-
 const viewport = new Viewport(carCanvas, world.zoom, world.offset);
 const miniMap = new MiniMap(miniMapCanvas, world.graph);
 
