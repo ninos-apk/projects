@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('body').style.opacity = 1
     const links = document.querySelectorAll('.nav-link');
     const contentDiv = document.getElementById('content');
+    const params = new URLSearchParams(window.location.search);
     function loadContent(link) {
 
         // Remove styles from previously clicked link
@@ -42,7 +43,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    const hash = window.location.hash.slice(1) || 'home.html'; // Get the hash from the URL
+
+    const hash = params.get("backFromProjects") === "true" ? "projects.html" : window.location.hash.slice(1) || 'home.html'; // Get the hash from the URL
+    params.delete("backFromProjects"); 
+    const newUrl = window.location.pathname + "?" + params.toString();
+    history.replaceState(null, "", newUrl);
     loadContent(document.querySelector(`a[href="${hash}"]`));
     
     const toggleSwitch = document.getElementById('mode-toggle');

@@ -1,3 +1,8 @@
+const back_button = document.getElementById("back-button");
+back_button.addEventListener("click", function () {
+    window.location.href = "../../index.html?backFromProjects=true";
+})
+
 const carCanvas = document.getElementById("carCanvas");
 carCanvas.width = window.innerWidth - 300;
 const carCtx = carCanvas.getContext("2d");

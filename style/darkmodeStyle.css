@@ -20,3 +20,7 @@ body.dark-mode .mainContainer{
 body.dark-mode .navbar ul li a .text {
     color: white;
 }
+
+body.dark-mode .about-text p, body.dark-mode .about-text h1 {
+    color: white;
+} 

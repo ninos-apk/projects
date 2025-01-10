@@ -1,4 +1,4 @@
-html, body {
+body {
     margin: 0;
     padding: 0;
     background-color: rgba(184, 163, 144, 0.541);
@@ -6,74 +6,80 @@ html, body {
 }
 
 .mainContainer{
-    background-color: rgba(0, 128, 0, 0.267);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #125e47;
     height: 100svh;
-    display: flex;
-    gap: 10px;
+    width: 100svw;
 }
 
-
-.rightDiv{
-    background-color: rgba(255, 255, 255, 0);
-    border: solid 2px;
-    width: 45%;
+.canvasDiv{
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.carCanvasDiv{
-    background-color: grey;
-    width: 45%;
-    
+
+#back-button {
+    display: inline-block;
+    margin: 10px;
+    text-align: center;
+    position: fixed;
+    top: 10px;
+    right: 10px;
 }
 
-.networkCanvasDiv{
-background-color: black;
-height: 80%;
-width: 100%;
+#back-button a {
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
+#back-button a:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    cursor: pointer;
+}
 
-@media only screen and (max-width: 600px) {
-    #networkCanvas {
-    }
-    #carCanvas{
-    }
+#back-button a:active {
+    background-color: #004085;
+    transform: translateY(0);
+}
 
-    #save ,#discard{
-    }
-    
-  }
-
-.verticalButtons{
-    order:1;
-    height: 10%;
+.ButtonsDiv{
+    display: inline-block;
+    margin: 10px;
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 20px;
 }
-#save , #discard{
-    font-size: 20px;
-    width: 50px;
+#save, #discard{
     height: 50px;
+    width: 50px;
+    font-size: large;
     border-radius: 10px;
-    border:none;
+    background-color: #a8dff5;
 }
-#save:active{
-    background-color: greenyellow;
+#save:hover, #discard:hover{
+    background-color: green;
+    transform: translateY(-2px);
     cursor: pointer;
 }
-
-#discard:active{
-    background-color: brown;
-    cursor: pointer;
-}
-#save:hover{
-    cursor: pointer;
-}
-
-#discard:hover{
-    cursor: pointer;
+#discard:active, #save:active {
+    background-color: #a8dff5;
+    transform: translateY(0);
 }

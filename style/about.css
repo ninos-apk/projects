@@ -1,0 +1,61 @@
+/* About section styling */
+.about-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+  }
+  
+  .about-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Image container */
+  .about-image {
+    padding: 10px;
+    width: 90%;
+  }
+  
+  .about-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    max-height: 400px; /* Limit image height for better appearance */
+    border-radius: 10px;
+  }
+  
+  /* Text container */
+  .about-text {
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .about-text h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #555;
+  }
+  
+  .about-text p {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: #666;
+    text-align: justify;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .about-container {
+      padding: 0;
+    }
+  
+    .about-text {
+      padding: 15px;
+    }
+  }

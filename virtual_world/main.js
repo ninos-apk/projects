@@ -1,7 +1,12 @@
+const back_button = document.getElementById("back-button");
+back_button.addEventListener("click", function () {
+    window.location.href = "../../index.html?backFromProjects=true";
+})
+
 function resizeCanvas(){
     const canvas = document.getElementById('myCanvas');
     const width = window.innerWidth;
-    const height = window.innerHeight*0.85;
+    const height = window.innerHeight*0.9;
     canvas.width = width;
     canvas.height = height;
 }

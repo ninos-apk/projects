@@ -1,33 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
- 
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spinning Wheel</title>
+    <link rel="stylesheet" href="../../style/back_button.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: white;
+            height: 100svh;
+            width: 100svw;
+        }
+        .speed-slider{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
 </head>
+
 <body>
-    <label for="speed" style="color:black;">Speed:</label>
-    <br>
-    <input id="speed" type="range" min="0" max="6.28" value="0.01" step="0.001">
-    <canvas id="canvas" width="400px" height="400px" style="border: 1px solid black;">
-    </canvas>
+    <div id="back-button">
+        <a class="back-button">back</a>
+    </div>
+    <div class="speed-slider">
+        <label for="speed" style="color:black;">Speed:</label>
+        <input id="speed" type="range" min="0" max="6.28" value="0.01" step="0.001">
+    </div>
+    
+    <canvas id="canvas"></canvas>
     <script src="wheel.js"></script>
     <script>
+        const back_button = document.getElementById("back-button");
+        back_button.addEventListener("click", function () {
+            window.location.href = "../../index.html?backFromProjects=true";
+        })
         const ctx = canvas.getContext("2d");
-        const center = {x:canvas.width/2, y:canvas.height/2};
-        const radius = 100;
-        const colors = ["violet","blue","cyan","green","yellow","orange","red"];
-        const wheel = new Wheel(center,radius,colors);
+        canvas.width = window.innerWidth * 0.8;
+        canvas.height = window.innerHeight * 0.5;
+        const center = { x: canvas.width / 2, y: canvas.height / 2 };
+        const radius = 150;
+        const colors = ["violet", "blue", "cyan", "green", "yellow", "orange", "red"];
+        const wheel = new Wheel(center, radius, colors);
         angle = 0;
-        ctx.globalAlpha=0.1;
+        ctx.globalAlpha = 0.1;
         animate();
 
-        function animate(){
+        window.addEventListener('resize', function () {
+            myCanvas.width = window.innerWidth;
+            myCanvas.height = window.innerHeight;
+            center.x = myCanvas.width / 2;
+            center.y = myCanvas.height / 2;
+            update();
+        });
+
+        function animate() {
             const lanstAngle = angle;
             angle += Number(speed.value);
 
-            for(let a = lanstAngle; a <= angle; a += 0.01){
+            for (let a = lanstAngle; a <= angle; a += 0.01) {
                 wheel.draw(ctx, a);
             }
             requestAnimationFrame(animate);
@@ -35,4 +77,5 @@
         wheel.draw(ctx);
     </script>
 </body>
+
 </html>

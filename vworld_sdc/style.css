@@ -80,3 +80,35 @@ width: 100%;
         font-size: 16px;
     }
 }
+#back-button {
+    display: inline-block;
+    margin: 10px;
+    text-align: center;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+}
+
+#back-button a {
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#back-button a:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    cursor: pointer;
+}
+
+#back-button a:active {
+    background-color: #004085;
+    transform: translateY(0);
+}

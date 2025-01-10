@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Self-driving car - no libraries</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    <div id="back-button">
+        <a class="back-button">back</a>
+    </div>
+    <div class="ButtonsDiv">
+        <button id="save" onclick="save()">💾 </button>
+        <button id="discard" onclick="discard()">❌</button>
+    </div>
     <div class="mainContainer">
-        <div class="carCanvasDiv">
+        <div class="canvasDiv">
             <canvas id="carCanvas"></canvas>
-        </div>
-        <div class="rightDiv">
-            <div class="verticalButtons">
-                <button id="save" onclick="save()">💾 </button>
-                <button id="discard" onclick="discard()">❌</button>
-            </div>
-            <div class="networkCanvasDiv">
-                <canvas id="networkCanvas"></canvas>
-            </div>
+            <canvas id="networkCanvas"></canvas>
         </div>
     </div>
     <script src="visualizer.js"></script>
@@ -30,5 +31,12 @@
     <script src="car.js"></script>
     <script src="bestBrain.js"></script>
     <script src="main.js"></script>
+    <script>
+        const back_button = document.getElementById("back-button");
+        back_button.addEventListener("click", function () {
+            window.location.href = "../../index.html?backFromProjects=true";
+        })
+    </script>
 </body>
+
 </html>
