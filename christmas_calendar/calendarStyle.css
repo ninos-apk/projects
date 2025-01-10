@@ -15,11 +15,11 @@
     border-radius: 5px;
     margin: 5px;
     cursor: pointer;
-    transition: transform 2s ease-in-out, background-color 2s ease-in-out;
+    transition: transform 1s ease-in-out, background-color 1s ease-in-out;
     transform-style: preserve-3d;
 }
 .homeDivClass canvas.flip{
-    transform: rotateY(180deg);
+    transform: rotateY(360deg);
 }
 
 /* For mobile phones (up to 600px wide): */
