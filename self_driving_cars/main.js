@@ -13,8 +13,8 @@ let screenSize = 'desktop';
 // Check if the screen width is less than or equal to 768px (common breakpoint for mobile)
 if (window.matchMedia("(max-width: 768px)").matches) {
     screenSize = 'phone';
-}else{
-    if(window.matchMedia("(max-width: 1024px)").matches){
+} else {
+    if (window.matchMedia("(max-width: 1024px)").matches) {
         screenSize = 'ipad'
     }
 }
@@ -27,7 +27,7 @@ function setCanvasSize(screen) {
         networkCanvas.height = window.innerHeight * 0.5;
         return;
     }
-    if(screen === 'ipad'){
+    if (screen === 'ipad') {
 
         carCanvas.width = window.innerWidth * 0.4;
         carCanvas.height = window.innerHeight;
@@ -51,7 +51,7 @@ window.addEventListener('resize', function () {
     road = new Road(carCanvas.width / 2, carCanvas.width * 0.95, laneCount = 3);
     animate();
 });
-const N = 2;
+const N = 10;
 const cars = generateCars(N);
 let traffic = [];
 let y = -300;
@@ -70,7 +70,7 @@ for (let i = 0; i < 10; i++) {
     y -= 200;
 }
 let bestCar = cars[0];
-const bestBrain = localStorage.getItem("bestBrain");
+let bestBrain = localStorage.getItem("bestBrain");
 if (bestBrain) {
     console.log("best Brain Found in Local Storage")
     for (let i = 0; i < cars.length; i++) {
@@ -82,7 +82,7 @@ if (bestBrain) {
 }
 else {
     console.log("Default best Brains loaded")
-    const bestBrain = JSON.stringify(bestBrainData);
+    bestBrain = JSON.stringify(bestBrainData);
     const bestBrain2 = JSON.stringify(bestBrainData2);
     for (let i = 0; i < cars.length / 2; i++) {
         cars[i].brain = JSON.parse(bestBrain);
@@ -106,6 +106,9 @@ function save() {
 }
 function discard() {
     localStorage.removeItem("bestBrain");
+}
+function reload() {
+    window.location.reload();
 }
 
 function generateCars(N) {

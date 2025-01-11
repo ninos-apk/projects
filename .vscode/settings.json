@@ -1,3 +1,4 @@
 {
     "editor.suggestOnTriggerCharacters": false,
+    "remote.autoForwardPortsFallback": 0,
 }

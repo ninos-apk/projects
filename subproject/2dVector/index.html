@@ -5,6 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2D Vector</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #eff8ff;
+            height: 100svh;
+            width: 100svw;
+        }
+    </style>
     <link rel="stylesheet" href="../../style/back_button.css">
 </head>
 
@@ -12,7 +26,7 @@
     <div id="back-button">
         <a class="back-button">back</a>
     </div>
-    <canvas id="myCanvas" style="background-color: rgb(11, 174, 196);"></canvas>
+    <canvas id="myCanvas" style="background-color: rgba(0,0,0,0.1);"></canvas>
 
 
     <script>
@@ -151,7 +165,7 @@
         }
 
         function drawCoordinateSystem() {
-            drawPoint({ x: 0, y: 0 }, size = 8, color = "red");
+            drawPoint({ x: 0, y: 0 }, size = 8, color = "gray");
             ctx.beginPath();
             ctx.moveTo(-offset.x, 0);
             ctx.lineTo(myCanvas.width - offset.x, 0);
@@ -159,7 +173,7 @@
             ctx.lineTo(0, myCanvas.height - offset.y);
             ctx.setLineDash([5, 4]);
             ctx.lineWidth = 2;
-            ctx.strokeStyle = "red";
+            ctx.strokeStyle = "gray";
             ctx.stroke();
             ctx.setLineDash([]);
         }
@@ -182,19 +196,6 @@
         }
 
     </script>
-
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #eff8ff;
-        }
-    </style>
 </body>
 
 </html>

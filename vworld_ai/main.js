@@ -66,6 +66,10 @@ function discard() {
     localStorage.removeItem("bestBrain");
 }
 
+function reload() {
+    window.location.reload();
+}
+
 function generateCars(N) {
     const startPoints = world.markings.filter((m)=> m instanceof Start);
     const startPoint = startPoints.length>0?startPoints[0].center:new Point(100,100);

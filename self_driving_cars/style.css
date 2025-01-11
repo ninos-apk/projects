@@ -31,21 +31,21 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
 }
-#save, #discard{
+#save, #discard, #reload{
     height: 50px;
     width: 50px;
     font-size: large;
     border-radius: 10px;
     background-color: #a8dff5;
 }
-#save:hover, #discard:hover{
+#save:hover, #discard:hover, #reload:hover{
     background-color: green;
     transform: translateY(-2px);
     cursor: pointer;
 }
-#discard:active, #save:active {
+#discard:active, #save:active, #reload:active{
     background-color: #a8dff5;
     transform: translateY(0);
 }

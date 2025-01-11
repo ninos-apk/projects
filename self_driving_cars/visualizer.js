@@ -1,6 +1,6 @@
 class Visualizer{
     static drawNetwork(ctx, network) {
-        const margin = 50;
+        const margin = 20;
         const left = margin;
         const top = margin;
         const width = ctx.canvas.width - margin * 2;
