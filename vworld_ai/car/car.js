@@ -20,7 +20,7 @@ class Car{
         }
         this.controls = new Controls(controlType)
         this.img = new Image();
-        this.img.src = "car.png";
+        this.img.src = "car/car.png";
         this.mask = document.createElement("canvas");
         this.mask.width = width;
         this.mask.height = height;
@@ -36,6 +36,17 @@ class Car{
         }
     }
 
+    load(info){
+        this.brain = info.brain;
+        this.maxSpeed = info.maxSpeed;
+        this.friction = info.friction;
+        this.acceleration = info.acceleration;
+        this.sensor.rayCount = info.sensor.rayCount;
+        this.sensor.raySpread = info.sensor.raySpread;
+        this.sensor.rayLength = info.sensor.rayLength;
+        this.sensor.rayOffset = info.sensor.rayOffset;
+    }
+
     update(roadBorders, traffic=[]) {
         if (!this.damaged) {
             this.#move();
@@ -47,7 +58,7 @@ class Car{
             this.sensor.update(roadBorders, traffic);
             const offsets = this.sensor.readings.map(
                 s => s == null ? 0 : 1 - s.offset
-            );
+            ).concat([this.speed / this.maxSpeed]);
             const outputs = NeuralNetwork.feedForward(offsets, this.brain);
             if (this.useBrain) {
                 this.controls.forward = outputs[0];

@@ -3,10 +3,10 @@ back_button.addEventListener("click", function () {
     window.location.href = "../index.html?backFromProjects=true";
 });
 
-function resizeCanvas(){
+function resizeCanvas() {
     const canvas = document.getElementById('myCanvas');
     const width = window.innerWidth;
-    const height = window.innerHeight*0.9;
+    const height = window.innerHeight * 0.9;
     canvas.width = width;
     canvas.height = height;
 }
@@ -16,56 +16,58 @@ window.addEventListener('resize', resizeCanvas);
 let editorVisible = true;
 const ctx = myCanvas.getContext("2d");
 const worldString = localStorage.getItem("world");
-const worldInfo  = worldString? JSON.parse(worldString):null;
-let world = worldString? World.load(worldInfo): new World(new Graph());
+const worldInfo = worldString ? JSON.parse(worldString) : null;
+let world = worldString ? World.load(worldInfo) : new World(new Graph());
 
 const graph = world.graph;
 
 const viewport = new Viewport(myCanvas, world.zoom, world.offset);
 
 tools = {
-  graph: {button: graphBtn, editor:new GraphEditor(viewport,graph), display:false},
-  stop: {button: stopBtn, editor: new StopEditor(viewport,world), display:false},
-  crossing: {button: crossingBtn, editor: new CrossingEditor(viewport,world), display:false},
-  start: {button: startBtn, editor: new StartEditor(viewport,world), display:false},
-  target: {button: targetBtn, editor: new TargetEditor(viewport,world), display:false} , 
-  parking: {button: parkingBtn, editor: new ParkingEditor(viewport,world), display:false} ,
-  yield: {button: yieldBtn, editor: new YieldEditor(viewport,world), display:false} ,
-  light: {button: lightBtn, editor: new LightEditor(viewport,world), display:false} 
+    graph: { button: graphBtn, editor: new GraphEditor(viewport, graph), display: false },
+    stop: { button: stopBtn, editor: new StopEditor(viewport, world), display: false },
+    crossing: { button: crossingBtn, editor: new CrossingEditor(viewport, world), display: false },
+    start: { button: startBtn, editor: new StartEditor(viewport, world), display: false },
+    target: { button: targetBtn, editor: new TargetEditor(viewport, world), display: false },
+    parking: { button: parkingBtn, editor: new ParkingEditor(viewport, world), display: false },
+    yield: { button: yieldBtn, editor: new YieldEditor(viewport, world), display: false },
+    light: { button: lightBtn, editor: new LightEditor(viewport, world), display: false }
 };
 
 let oldGraphHash = graph.hash();
 
 setMode("graph");
 animate();
-function animate(){
+function animate() {
     viewport.reset();
-    if(oldGraphHash!=graph.hash()){
+    if (oldGraphHash != graph.hash()) {
         world.generate();
         oldGraphHash = graph.hash();
     }
     const viewPoint = scale(viewport.getOffset(), -1);
     world.draw(ctx, viewPoint);
     ctx.globalAlpha = 0.7;
-    for(const tool of Object.values(tools)){
-        if(tool.display){
+    for (const tool of Object.values(tools)) {
+        if (tool.display) {
             tool.editor.display();
         }
     }
     requestAnimationFrame(animate);
 }
-function dispose(){
+function dispose() {
     tools["graph"].editor.dispose()
     world.markings.length = 0;
 }
-function save(){
+function save() {
     world.zoom = viewport.zoom;
     world.offset = viewport.offset;
     const element = document.createElement("a");
     element.setAttribute(
         "href",
-        "data:application/json;charset=utf-8,"+
-        encodeURIComponent(JSON.stringify(world))
+        "data:application/json;charset=utf-8," +
+        encodeURIComponent("const world = World.load(" +
+            JSON.stringify(world)
+            + ");")
     );
     const fileName = "name.world";
     element.setAttribute("download", fileName);
@@ -73,59 +75,63 @@ function save(){
     localStorage.setItem("world", JSON.stringify(world))
 }
 
-function load(event){
+function load(event) {
     const file = event.target.files[0];
-    if(!file){
+    if (!file) {
         alert("No file selected");
         return;
     }
     const reader = new FileReader();
     reader.readAsText(file);
-    reader.onload = (evt) =>{
+    reader.onload = (evt) => {
         const fileContent = evt.target.result;
-        const jsonData = JSON.parse(fileContent);
+        const jsonString = fileContent.substring(
+            fileContent.indexOf("(") +1,
+            fileContent.lastIndexOf(")")
+        );
+        const jsonData = JSON.parse(jsonString);
         world = World.load(jsonData);
         localStorage.setItem("world", JSON.stringify(world))
         location.reload();
     }
 }
 
-function removeSelectedPoint(){
+function removeSelectedPoint() {
     graphEditor = tools["graph"].editor
-    if(graphEditor.selected){
-        graphEditor.hovered =  graphEditor.selected
+    if (graphEditor.selected) {
+        graphEditor.hovered = graphEditor.selected
         graphEditor.selected = null;
         return;
     }
-    if(graphEditor.hovered){
+    if (graphEditor.hovered) {
         graphEditor.graph.removePoint(graphEditor.hovered);
         graphEditor.hovered = null;
     }
 }
 
-function setMode(mode){
+function setMode(mode) {
     disableEditors();
     tools[mode].button.style.backgroundColor = "white";
     tools[mode].button.style.filter = "";
     tools[mode].editor.enable();
     tools[mode].display = true;
 }
-function disableEditors(){
-    for(tool of Object.values(tools)){
+function disableEditors() {
+    for (tool of Object.values(tools)) {
         tool.button.style.backgroundColor = "gray";
         tool.button.style.filter = "grayscale(100%)";
         tool.editor.disable();
         tool.display = false;
     }
 }
-function openOsmPanel(){
+function openOsmPanel() {
     osmPanel.style.display = "block";
 }
-function closeOsmPanel(){
+function closeOsmPanel() {
     osmPanel.style.display = "none";
 }
-function parseOsmData(){
-    if(osmDataContainer.value == ""){
+function parseOsmData() {
+    if (osmDataContainer.value == "") {
         alert("Paste data first");
         return;
     }

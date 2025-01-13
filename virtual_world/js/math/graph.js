@@ -8,7 +8,8 @@ class Graph{
         const points = info.points.map((p) => new Point(p.x, p.y));
         const segments = info.segments.map((seg) => new Segment(
             points.find((p) => p.equals(seg.p1)),
-            points.find((p) => p.equals(seg.p2))
+            points.find((p) => p.equals(seg.p2)),
+            seg.oneWay
         ));
         return new Graph(points, segments);
     }

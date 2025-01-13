@@ -66,6 +66,14 @@ const miniMap = new MiniMap(miniMapCanvas, world.graph);
 const N = 10;
 const cars = generateCars(N);
 let bestCar = cars[0];
+if(localStorage.getItem("bestBrain")){
+    for (let i = 0; i < cars.length; i++) {
+        cars[i].brain = JSON.parse(localStorage.getItem("bestBrain"));
+        if (i != 0) {
+            NeuralNetwork.mutate(cars[i].brain, 0.1);
+        }
+    }
+}
 const traffic = [];
 const roadBorders = world.roadBorders.map((s) => [s.p1, s.p2]);
 world.cars = cars;
@@ -95,13 +103,15 @@ function toggleTracking() {
 }
 
 function generateCars(N) {
-    const startPoints = world.markings.filter((m) => m instanceof Start);
+    const startPoints = world.markings.filter((m) => m.type === "start");
     const startPoint = startPoints.length > 0 ? startPoints[0].center : new Point(100, 100);
     const dir = startPoints.length > 0 ? startPoints[0].directionVector : new Point(0, -1);
     const cars = [];
     const startAngle = - angle(dir) + Math.PI / 2;
     for (let i = 0; i < N; i++) {
-        cars.push(new Car(startPoint.x, startPoint.y, 30, 50, "AI", startAngle));
+        const car = new Car(startPoint.x, startPoint.y, 30, 50, "AI", startAngle)
+        car.load(carInfo);
+        cars.push(car);
     }
     return cars;
 }
