@@ -11,11 +11,12 @@ const miniMapCanvas = document.getElementById("miniMapCanvas");
 
 let screenSize = 'desktop';
 
-if (window.matchMedia("(max-width: 768px)").matches) {
-    screenSize = 'phone';
-}
 if (window.matchMedia("(max-width: 1024px)").matches) {
     screenSize = 'ipad'
+}
+
+if (window.matchMedia("(max-width: 768px)").matches) {
+    screenSize = 'phone';
 }
 
 function setCanvasSize() {

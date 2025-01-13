@@ -39,6 +39,7 @@ body {
     font-size: large;
     border-radius: 10px;
     background-color: #a8dff5;
+    border: none;
 }
 #save:hover, #discard:hover, #reload:hover{
     background-color: green;
@@ -48,4 +49,10 @@ body {
 #discard:active, #save:active, #reload:active{
     background-color: #a8dff5;
     transform: translateY(0);
+}
+
+@media screen and (max-width: 768px) {
+    #save, #discard, #reload{
+        background-color: rgba(168, 223, 245, 0.2);
+    }
 }

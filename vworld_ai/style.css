@@ -81,4 +81,8 @@ justify-content: center;
         top: 5px;
         left: 5px;
     }
+
+    #save, #discard, #reload, #tracking{
+        background-color: rgba(168, 223, 245, 0.2);
+    }
 }
