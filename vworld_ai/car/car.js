@@ -12,6 +12,7 @@ class Car{
         this.useBrain = controlType == "AI";
         this.angle = angle; 
         this.damaged = false;
+
         if (controlType != "DUMMY") {
             this.sensor = new Sensor(this);
             this.brain = new NeuralNetwork(
@@ -20,7 +21,7 @@ class Car{
         }
         this.controls = new Controls(controlType)
         this.img = new Image();
-        this.img.src = "car/car.png";
+        this.img.src = "../assets/car.png";
         this.mask = document.createElement("canvas");
         this.mask.width = width;
         this.mask.height = height;
@@ -118,11 +119,11 @@ class Car{
         if (this.speed != 0) {
             const flip = this.speed > 0 ? 1 : -1;
             if (this.controls.right) {
-                this.angle -= 0.01 * flip;
+                this.angle -= 0.03 * flip;
             }
     
             if (this.controls.left) {
-                this.angle += 0.01 * flip;
+                this.angle += 0.03 * flip;
             }
         }
 

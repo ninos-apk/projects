@@ -60,7 +60,6 @@ justify-content: center;
     border:none;
 }
 #save:hover, #discard:hover, #reload:hover, #tracking:hover{
-    background-color: green;
     transform: translateY(-2px);
     cursor: pointer;
 }

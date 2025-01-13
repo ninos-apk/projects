@@ -66,9 +66,9 @@ const miniMap = new MiniMap(miniMapCanvas, world.graph);
 const N = 10;
 const cars = generateCars(N);
 let bestCar = cars[0];
-if(localStorage.getItem("bestBrain")){
+if(localStorage.getItem("bestBrainAI")){
     for (let i = 0; i < cars.length; i++) {
-        cars[i].brain = JSON.parse(localStorage.getItem("bestBrain"));
+        cars[i].brain = JSON.parse(localStorage.getItem("bestBrainAI"));
         if (i != 0) {
             NeuralNetwork.mutate(cars[i].brain, 0.1);
         }
@@ -82,10 +82,10 @@ animate();
 
 function save() {
     jsonData = JSON.stringify(bestCar.brain);
-    localStorage.setItem("bestBrain", jsonData);
+    localStorage.setItem("bestBrainAI", jsonData);
 }
 function discard() {
-    localStorage.removeItem("bestBrain");
+    localStorage.removeItem("bestBrainAI");
 }
 
 function reload() {
@@ -96,7 +96,7 @@ function toggleTracking() {
     tracking = !tracking;
     const button = document.getElementById("tracking");
     if (tracking) {
-        button.style.backgroundColor = "#a8dff5";
+        screenSize === 'phone' ? button.style.backgroundColor = "rgba(168, 223, 245, 0.2)" : button.style.backgroundColor = "#a8dff5";
     } else {
         button.style.backgroundColor = "red";
     }
@@ -109,7 +109,7 @@ function generateCars(N) {
     const cars = [];
     const startAngle = - angle(dir) + Math.PI / 2;
     for (let i = 0; i < N; i++) {
-        const car = new Car(startPoint.x, startPoint.y, 30, 50, "AI", startAngle)
+        const car = new Car(startPoint.x, startPoint.y, startPoints[0].width * 0.5, startPoints[0].height * 0.8, "AI", startAngle)
         car.load(carInfo);
         cars.push(car);
     }

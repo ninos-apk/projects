@@ -1,7 +1,7 @@
 class World{
     constructor(graph,
         roadWidth = 100,
-        roadRoundness = 8,
+        roadRoundness = 10,
         buildingWidth = 150,
         buildingMinLength = 150,
         spacing = 50,
