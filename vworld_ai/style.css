@@ -51,26 +51,20 @@ justify-content: center;
     gap: 10px;
 }
 
-#save , #discard, #reload{
-    font-size: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 10px;
-    border:none;
-}
-#save, #discard, #reload{
+#save, #discard, #reload, #tracking{
     height: 50px;
     width: 50px;
     font-size: large;
     border-radius: 10px;
     background-color: #a8dff5;
+    border:none;
 }
-#save:hover, #discard:hover, #reload:hover{
+#save:hover, #discard:hover, #reload:hover, #tracking:hover{
     background-color: green;
     transform: translateY(-2px);
     cursor: pointer;
 }
-#discard:active, #save:active, #reload:active{
+#discard:active, #save:active, #reload:active, #tracking:active{
     background-color: #a8dff5;
     transform: translateY(0);
 }

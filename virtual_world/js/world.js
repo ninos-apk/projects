@@ -21,7 +21,8 @@ class World{
         this.trees = [];
         this.laneGuides = [];
         this.markings = [];
-
+        this.cars = [];
+        this.bestCar = null;
         this.frameCount = 0; 
         this.generate();
     }
@@ -262,6 +263,14 @@ class World{
         const items = [...this.buildings, ...this.trees].filter(
             (i)=> i.base.distanceToPoint(viewPoint) < renderRadius
         );
+        ctx.globalAlpha = 0.2;
+        for (const car of this.cars) {
+            car.draw(ctx);
+        }
+        ctx.globalAlpha = 1;
+        if (this.bestCar) {
+            this.bestCar.draw(ctx, true);
+        }
         items.sort(
             (a,b)=>
                 b.base.distanceToPoint(viewPoint) - 

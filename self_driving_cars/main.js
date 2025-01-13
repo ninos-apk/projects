@@ -10,13 +10,11 @@ const networkCtx = networkCanvas.getContext("2d");
 
 let screenSize = 'desktop';
 
-// Check if the screen width is less than or equal to 768px (common breakpoint for mobile)
 if (window.matchMedia("(max-width: 768px)").matches) {
     screenSize = 'phone';
-} else {
-    if (window.matchMedia("(max-width: 1024px)").matches) {
-        screenSize = 'ipad'
-    }
+}
+if (window.matchMedia("(max-width: 1024px)").matches) {
+    screenSize = 'ipad'
 }
 
 function setCanvasSize(screen) {

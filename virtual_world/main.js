@@ -1,7 +1,7 @@
 const back_button = document.getElementById("back-button");
 back_button.addEventListener("click", function () {
     window.location.href = "../index.html?backFromProjects=true";
-})
+});
 
 function resizeCanvas(){
     const canvas = document.getElementById('myCanvas');
