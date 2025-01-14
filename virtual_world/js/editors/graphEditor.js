@@ -40,6 +40,15 @@ class GraphEditor {
         this.canvas.addEventListener("touchstart", this.boundTouchStart);
         this.canvas.addEventListener("touchmove", this.boundTouchMove);
         this.canvas.addEventListener("touchend", this.boundTouchEnd);
+
+        window.addEventListener("keydown", (evt) => {
+            if (evt.key == "s") {
+                this.start = this.hovered;
+            }
+            if (evt.key == "e") {
+                this.end = this.hovered;
+            }
+        });
     }
 
     #removeEventListeners(){
@@ -154,6 +163,15 @@ class GraphEditor {
             const intent = this.hovered ? this.hovered : input_method;
             new Segment(this.selected, intent).draw(ctx, {color: "rgba(0,0,0,0.5)" ,dash:[3, 3]});
             this.selected.draw(this.ctx, { fill: true });
+        }
+        if(this.start && this.end){
+            const path = this.graph.getShortestPathAStar(this.start, this.end);
+            for(const point of path){
+                point.draw(this.ctx,{size:50,color:"blue"});
+                if(point.prev){
+                    new Segment(point, point.prev).draw(ctx, {color: "rgba(63, 230, 12, 0.7)", width:20 });
+                }
+            }
         }
     }
 
