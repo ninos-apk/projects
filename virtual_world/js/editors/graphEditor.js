@@ -4,22 +4,23 @@ class GraphEditor {
         this.canvas = viewport.canvas;
         this.ctx = this.canvas.getContext("2d");
 
-        this.graph = graph; 
+        this.graph = graph;
 
-        this.selected = null; 
+        this.selected = null;
         this.hovered = null;
         this.dragging = false;
         this.mouse = null;
         this.touch = null;
         this.timeOut = false;
         this.touchActive = false;
-    }   
+        this.#addEventListnerForShortestPath();
+    }
 
-    enable(){
+    enable() {
         this.#addEventListeners();
     }
 
-    disable(){
+    disable() {
         this.#removeEventListeners();
         this.selected = null;
         this.hovered = null;
@@ -28,32 +29,38 @@ class GraphEditor {
     #addEventListeners() {
         this.boundMouseUp = this.#handleMouseUp.bind(this);
         this.boundMouseDown = this.#handleMouseDown.bind(this);
-        this.boundMouseMove = this.#handleMouseMove.bind(this);
+        //this.boundMouseMove = this.#handleMouseMove.bind(this);
         this.boundTouchStart = this.#handleTouchStart.bind(this);
         this.boundTouchEnd = this.#handleTouchEnd.bind(this);
         this.boundTouchMove = this.#handleTouchMove.bind(this);
-        this.boundContextMenu =  (evt) => evt.preventDefault();
+        this.boundContextMenu = (evt) => evt.preventDefault();
         this.canvas.addEventListener("mousedown", this.boundMouseDown);
-        this.canvas.addEventListener("mousemove", this.boundMouseMove);
+        //this.canvas.addEventListener("mousemove", this.boundMouseMove);
         this.canvas.addEventListener("mouseup", this.boundMouseUp);
         this.canvas.addEventListener("contextmenu", this.boundContextMenu);
         this.canvas.addEventListener("touchstart", this.boundTouchStart);
         this.canvas.addEventListener("touchmove", this.boundTouchMove);
         this.canvas.addEventListener("touchend", this.boundTouchEnd);
-
+    }
+    #addEventListnerForShortestPath(){
+        this.boundMouseMove = this.#handleMouseMove.bind(this);
+        this.canvas.addEventListener("mousemove", this.boundMouseMove);
         window.addEventListener("keydown", (evt) => {
             if (evt.key == "s") {
-                this.start = this.hovered;
+                this.start = this.mouse;
             }
             if (evt.key == "e") {
-                this.end = this.hovered;
+                this.end = this.mouse;
+            }
+            if (this.start && this.end) {
+                world.generateCorridor(this.start, this.end);
             }
         });
     }
 
-    #removeEventListeners(){
+    #removeEventListeners() {
         this.canvas.removeEventListener("mousedown", this.boundMouseDown);
-        this.canvas.removeEventListener("mousemove", this.boundMouseMove);
+        //this.canvas.removeEventListener("mousemove", this.boundMouseMove);
         this.canvas.removeEventListener("mouseup", this.boundMouseUp);
         this.canvas.removeEventListener("contextmenu", this.boundContextMenu);
         this.canvas.removeEventListener("touchstart", this.boundTouchStart);
@@ -77,7 +84,7 @@ class GraphEditor {
     }
 
     #handleMouseDown(evt) {
-        if(this.touchActive){
+        if (this.touchActive) {
             return;
         }
         if (evt.button == 2) {// right click
@@ -101,13 +108,13 @@ class GraphEditor {
         }
     }
 
-    #handleMouseUp(evt){
+    #handleMouseUp(evt) {
         this.dragging = false;
         this.touchActive = false;
     }
 
     #handleMouseMove(evt) {
-        if(this.touchActive){
+        if (this.touchActive) {
             return;
         }
         this.mouse = this.viewport.getMouse(evt, true);
@@ -118,10 +125,10 @@ class GraphEditor {
         }
     }
 
-    #handleTouchStart(evt){
+    #handleTouchStart(evt) {
         this.touchActive = true;
         this.touch = this.viewport.getTouchPoint(evt, true);
-        if(evt.touches.length > 1){
+        if (evt.touches.length > 1) {
             return;
         }
         this.hovered = getNearestPoint(this.touch, this.graph.points, 10 * this.viewport.zoom);
@@ -131,11 +138,11 @@ class GraphEditor {
         }
     }
 
-    #handleTouchMove(evt){
+    #handleTouchMove(evt) {
         this.touch = this.viewport.getTouchPoint(evt, true);
         setTimeout(() => {
             this.timeOut = true;
-          }, 200);
+        }, 200);
         if (this.dragging) {
             this.viewport.disableViewportMove = true;
             this.selected.x = this.touch.x;
@@ -143,8 +150,8 @@ class GraphEditor {
         }
     }
 
-    #handleTouchEnd(evt){
-        if(!this.dragging && !this.timeOut){
+    #handleTouchEnd(evt) {
+        if (!this.dragging && !this.timeOut) {
             this.graph.addPoint(this.touch);
             this.#select(this.touch);
         }
@@ -159,19 +166,10 @@ class GraphEditor {
             this.hovered.draw(this.ctx, { outline: true });
         }
         if (this.selected) {
-            const input_method = this.mouse?this.mouse:this.touch;
+            const input_method = this.mouse ? this.mouse : this.touch;
             const intent = this.hovered ? this.hovered : input_method;
-            new Segment(this.selected, intent).draw(ctx, {color: "rgba(0,0,0,0.5)" ,dash:[3, 3]});
+            new Segment(this.selected, intent).draw(ctx, { color: "rgba(0,0,0,0.5)", dash: [3, 3] });
             this.selected.draw(this.ctx, { fill: true });
-        }
-        if(this.start && this.end){
-            const path = this.graph.getShortestPathAStar(this.start, this.end);
-            for(const point of path){
-                point.draw(this.ctx,{size:50,color:"blue"});
-                if(point.prev){
-                    new Segment(point, point.prev).draw(ctx, {color: "rgba(63, 230, 12, 0.7)", width:20 });
-                }
-            }
         }
     }
 

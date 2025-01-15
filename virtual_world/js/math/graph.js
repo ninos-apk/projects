@@ -2,6 +2,7 @@ class Graph {
     constructor(points = [], segments = []) {
         this.points = points;
         this.segments = segments;
+        this.shortestPath = new ShortestPath({points, segments});
     }
 
     static load(info) {
@@ -57,155 +58,6 @@ class Graph {
         );
     }
 
-    // getShortestPath(start, end) {
-
-    //     for (const point of this.points) {
-    //         point.dist = Infinity;
-    //         point.visited = false;
-    //     }
-    //     let currentPoint = start;
-    //     currentPoint.dist = 0;
-
-    //     while (!end.visited) {
-    //         const segs = this.getSegmentsLeavingFromPoint(currentPoint);
-    //         for (const seg of segs) {
-    //             const otherPoint = seg.p1.equals(currentPoint) ? seg.p2 : seg.p1;
-    //             if(currentPoint.dist + seg.length() > otherPoint.dist) continue;
-    //             otherPoint.dist = currentPoint.dist + seg.length();
-    //             otherPoint.prev = currentPoint;
-    //         }
-    //         currentPoint.visited = true;
-
-    //         const unvisited = this.points.filter((p) => !p.visited);
-    //         const dists = unvisited.map((p) => p.dist);
-    //         currentPoint = unvisited.find((p) => p.dist == Math.min(...dists));
-    //     }
-
-    //     const path = [];
-    //     currentPoint = end;
-    //     while(currentPoint){
-    //         path.unshift(currentPoint);
-    //         currentPoint = currentPoint.prev;
-    //     }
-    //     for(const point of this.points){
-    //         delete point.dist;
-    //         delete point.prev;
-    //         delete point.visited;
-    //     }
-    //     return path;
-    // }
-    getShortestPath(start, end) {
-        // Initialize distances and previous nodes
-        const dist = new Map();
-        const prev = new Map();
-        const visited = new Set();
-        const priorityQueue = new PriorityQueue((a, b) => dist.get(a) - dist.get(b));
-    
-        for (const point of this.points) {
-            dist.set(point, Infinity);
-            prev.set(point, null);
-        }
-        dist.set(start, 0);
-        priorityQueue.push(start);
-    
-        // Dijkstra's Algorithm
-        while (!priorityQueue.isEmpty()) {
-            const currentPoint = priorityQueue.pop();
-    
-            if (currentPoint === end) break;
-            if (visited.has(currentPoint)) continue;
-    
-            visited.add(currentPoint);
-    
-            const segs = this.getSegmentsLeavingFromPoint(currentPoint);
-            for (const seg of segs) {
-                const neighbor = seg.p1.equals(currentPoint) ? seg.p2 : seg.p1;
-                if (visited.has(neighbor)) continue;
-    
-                const newDist = dist.get(currentPoint) + seg.length();
-                if (newDist < dist.get(neighbor)) {
-                    dist.set(neighbor, newDist);
-                    prev.set(neighbor, currentPoint);
-                    priorityQueue.push(neighbor); // Update priority
-                }
-            }
-        }
-    
-        // Reconstruct the shortest path
-        const path = [];
-        for (let at = end; at !== null; at = prev.get(at)) {
-            path.unshift(at);
-        }
-    
-        return path;
-    }
-    getShortestPathAStar(start, end) {
-        // Initialize data structures
-        const dist = new Map(); // Distance from start to each point
-        const prev = new Map(); // Tracks the previous point in the optimal path
-        const fScore = new Map(); // Estimated total distance (dist + heuristic)
-        const priorityQueue = new PriorityQueue((a, b) => fScore.get(a) - fScore.get(b));
-        const visited = new Set();
-    
-        // Initialize distances
-        for (const point of this.points) {
-            dist.set(point, Infinity);
-            fScore.set(point, Infinity);
-            prev.set(point, null);
-        }
-        dist.set(start, 0);
-        fScore.set(start, this.heuristic(start, end));
-        priorityQueue.push(start);
-    
-        // A* Algorithm
-        while (!priorityQueue.isEmpty()) {
-            const current = priorityQueue.pop();
-    
-            // If we've reached the end point, reconstruct the path
-            if (current === end) {
-                const path = [];
-                let temp = end;
-                while (temp) {
-                    path.unshift(temp);
-                    temp = prev.get(temp);
-                }
-                return path;
-            }
-    
-            visited.add(current);
-    
-            // Process neighbors
-            const neighbors = this.getSegmentsLeavingFromPoint(current);
-            for (const segment of neighbors) {
-                const neighbor = segment.p1.equals(current) ? segment.p2 : segment.p1;
-    
-                if (visited.has(neighbor)) continue;
-    
-                const tentativeDist = dist.get(current) + segment.length();
-    
-                if (tentativeDist < dist.get(neighbor)) {
-                    dist.set(neighbor, tentativeDist);
-                    prev.set(neighbor, current);
-                    fScore.set(neighbor, tentativeDist + this.heuristic(neighbor, end));
-    
-                    if (!priorityQueue.heap.includes(neighbor)) {
-                        priorityQueue.push(neighbor);
-                    }
-                }
-            }
-        }
-    
-        // If we reach here, no path was found
-        return [];
-    }
-    
-    // Heuristic function (Euclidean distance)
-    heuristic(pointA, pointB) {
-        return Math.sqrt(
-            Math.pow(pointB.x - pointA.x, 2) + Math.pow(pointB.y - pointA.y, 2)
-        );
-    }    
-
     containsPoint(point) {
         return this.points.find((p) => p.equals(point));
     }
@@ -220,7 +72,7 @@ class Graph {
     }
 
     hash() {
-        return JSON.stringify(this);
+        return JSON.stringify({points:this.points,segs:this.segments});
     }
 
     draw(ctx) {

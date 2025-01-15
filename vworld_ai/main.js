@@ -63,10 +63,15 @@ const graph = world.graph;
 const viewport = new Viewport(carCanvas, world.zoom, world.offset);
 const miniMap = new MiniMap(miniMapCanvas, world.graph);
 
-const N = 10;
-const cars = generateCars(N);
+const N = localStorage.getItem("carsNumber");
+if(N){
+    carsNumber.value = N;
+    
+}
+
+const cars = N?generateCars(N):generateCars(1);
 let bestCar = cars[0];
-if(localStorage.getItem("bestBrainAI")){
+if (localStorage.getItem("bestBrainAI")) {
     for (let i = 0; i < cars.length; i++) {
         cars[i].brain = JSON.parse(localStorage.getItem("bestBrainAI"));
         if (i != 0) {
@@ -75,7 +80,14 @@ if(localStorage.getItem("bestBrainAI")){
     }
 }
 const traffic = [];
-const roadBorders = world.roadBorders.map((s) => [s.p1, s.p2]);
+let roadBorders = [];
+const target = world.markings.find((m) => m.type == "target");
+if (target) {
+    world.generateCorridor(bestCar, target.center);
+    roadBorders = world.corridor.map((s) => [s.p1, s.p2]);
+} else {
+    roadBorders = world.roadBorders.map((s) => [s.p1, s.p2]);
+}
 world.cars = cars;
 let tracking = true;
 animate();
@@ -89,6 +101,14 @@ function discard() {
 }
 
 function reload() {
+    let val = carsNumber.value;
+    if(isNaN(val)){
+        val = 1;
+    }
+    if(val>999){
+        val = 999;
+    }
+    localStorage.setItem("carsNumber",val);
     window.location.reload();
 }
 
@@ -127,7 +147,7 @@ function animate(time) {
         c => c.fittness == Math.max(...cars.map(c => c.fittness))
     );
     world.bestCar = bestCar;
-    if(tracking){
+    if (tracking) {
         viewport.offset.x = -bestCar.x;
         viewport.offset.y = -bestCar.y;
     }

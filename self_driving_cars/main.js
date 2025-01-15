@@ -49,8 +49,14 @@ window.addEventListener('resize', function () {
     road = new Road(carCanvas.width / 2, carCanvas.width * 0.95, laneCount = 3);
     animate();
 });
-const N = 10;
-const cars = generateCars(N);
+
+const N = localStorage.getItem("generatedCars");
+if(N){
+    carsNumber.value = N;
+}
+
+const cars = N?generateCars(N):generateCars(1);
+
 let traffic = [];
 let y = -300;
 for (let i = 0; i < 10; i++) {
@@ -106,6 +112,14 @@ function discard() {
     localStorage.removeItem("bestBrain");
 }
 function reload() {
+    let val = carsNumber.value;
+    if(isNaN(val)){
+        val = 1;
+    }
+    if(val>999){
+        val = 999;
+    }
+    localStorage.setItem("generatedCars",val);
     window.location.reload();
 }
 

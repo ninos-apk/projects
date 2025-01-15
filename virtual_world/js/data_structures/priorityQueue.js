@@ -12,10 +12,6 @@ class PriorityQueue {
         return this.size() === 0;
     }
 
-    peek() {
-        return this.heap[0];
-    }
-
     push(value) {
         this.heap.push(value);
         this.bubbleUp(this.size() - 1);

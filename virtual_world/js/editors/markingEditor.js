@@ -38,7 +38,7 @@ class MarkingEditor{
 
     #removeEventListeners(){
         this.canvas.removeEventListener("mousedown", this.boundMouseDown);
-        this.canvas.removeEventListener("mousemove", this.boundMouseMove);
+        //this.canvas.removeEventListener("mousemove", this.boundMouseMove);
         this.canvas.removeEventListener("contextmenu", this.boundContextMenu);
     }
 

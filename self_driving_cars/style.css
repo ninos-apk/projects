@@ -16,7 +16,6 @@ body {
     height: 100svh;
     width: 100svw;
 }
-
 .canvasDiv{
     display: flex;
     justify-content: center;
@@ -32,6 +31,8 @@ body {
     align-items: center;
     justify-content: center;
     gap: 10px;
+    flex-wrap: wrap;
+    max-width: 150px;
 }
 #save, #discard, #reload{
     height: 50px;
@@ -40,6 +41,14 @@ body {
     border-radius: 10px;
     background-color: #a8dff5;
     border: none;
+}
+#carsNumber {
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+    border: none;
+    text-align: center;
+    font-size: large;
 }
 #save:hover, #discard:hover, #reload:hover{
     background-color: green;
@@ -54,5 +63,8 @@ body {
 @media screen and (max-width: 768px) {
     #save, #discard, #reload{
         background-color: rgba(168, 223, 245, 0.2);
+    }
+    #carsNumber{
+        background-color: rgba(255, 255, 255, 0.5);
     }
 }

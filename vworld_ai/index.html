@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../style/back_button.css">
 </head>
+
 <body>
     <div id="back-button">
         <a class="back-button">back</a>
@@ -25,9 +27,12 @@
                 <button id="discard" onclick="discard()">❌</button>
                 <button id="reload" onclick="reload()">🔄</button>
                 <button id="tracking" onclick="toggleTracking()">🎯</button>
+                <input id="carsNumber" type="number" min="1" max="1000" step="1" placeholder="1-999" />
             </div>
         </div>
     </div>
+    <script src="../virtual_world/js/data_structures/priorityQueue.js"></script>
+    <script src="../virtual_world/js/algorithms/shortestPath.js"></script>
     <script src="../virtual_world/js/world.js"></script>
     <script src="../virtual_world/js/math/graph.js"></script>
     <script src="../virtual_world/js/math/utils.js"></script>
@@ -67,4 +72,5 @@
     <script src="../self_driving_cars/bestBrain.js"></script>
     <script src="main.js"></script>
 </body>
+
 </html>
