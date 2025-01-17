@@ -31,7 +31,8 @@ tools = {
     target: { button: targetBtn, editor: new TargetEditor(viewport, world), display: false },
     parking: { button: parkingBtn, editor: new ParkingEditor(viewport, world), display: false },
     yield: { button: yieldBtn, editor: new YieldEditor(viewport, world), display: false },
-    light: { button: lightBtn, editor: new LightEditor(viewport, world), display: false }
+    light: { button: lightBtn, editor: new LightEditor(viewport, world), display: false },
+    delete: { button: deleteBtn, editor: new DeleteEditor(viewport, world), display: false },
 };
 
 let oldGraphHash = graph.hash();
@@ -55,8 +56,13 @@ function animate() {
     requestAnimationFrame(animate);
 }
 function dispose() {
-    tools["graph"].editor.dispose()
-    world.markings.length = 0;
+    const confirmation = window.confirm("Are you sure you want to delete the entire map?");
+    if (confirmation) {
+        tools["graph"].editor.dispose();
+        world.markings.length = 0;
+    } else {
+        console.log("Dispose action cancelled.");
+    }
 }
 function save() {
     world.zoom = viewport.zoom;
@@ -86,7 +92,7 @@ function load(event) {
     reader.onload = (evt) => {
         const fileContent = evt.target.result;
         const jsonString = fileContent.substring(
-            fileContent.indexOf("(") +1,
+            fileContent.indexOf("(") + 1,
             fileContent.lastIndexOf(")")
         );
         const jsonData = JSON.parse(jsonString);
@@ -96,22 +102,17 @@ function load(event) {
     }
 }
 
-function removeSelectedPoint() {
-    graphEditor = tools["graph"].editor
-    if (graphEditor.selected) {
-        graphEditor.hovered = graphEditor.selected
-        graphEditor.selected = null;
-        return;
-    }
-    if (graphEditor.hovered) {
-        graphEditor.graph.removePoint(graphEditor.hovered);
-        graphEditor.hovered = null;
-    }
+function toggleRemoveMarking() {
+    disableEditors();
+    setMode("removeMarking");
+    tools.removeMarking.editor.disable();
+    tools.removeMarking.editor.enableRemoveMarking();
+    tools.graph.editor.removeActive = true;
 }
 
 function setMode(mode) {
     disableEditors();
-    tools[mode].button.style.backgroundColor = "white";
+    tools[mode].button.style.backgroundColor = "rgba(58, 189, 43, 0.66)";
     tools[mode].button.style.filter = "";
     tools[mode].editor.enable();
     tools[mode].display = true;
@@ -123,6 +124,7 @@ function disableEditors() {
         tool.editor.disable();
         tool.display = false;
     }
+    tools.graph.editor.removeActive = false;
 }
 function openOsmPanel() {
     osmPanel.style.display = "block";

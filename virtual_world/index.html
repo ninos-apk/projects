@@ -24,13 +24,13 @@
             <button id="lightBtn" onclick="setMode('light')">🚦</button>
             <button id="yieldBtn" onclick="setMode('yield')">⚠️</button>
             <button id="targetBtn" onclick="setMode('target')">🎯</button>
-            <button onclick="dispose()">🗑️</button>
+            <button id="deleteBtn" onclick="setMode('delete')">🗑️</button>
             <button onclick="save()"> 💾 </button>
+            <button onclick="dispose()">❌</button>
             <label for="fileInput" class="file-input-lable">
                 &#128193;
                 <input type="file" id="fileInput" accept=".world" onchange="load(event)" />
             </label>
-            <button onclick="removeSelectedPoint()">⌫</button>
             <button onclick="openOsmPanel()">🗺️</button>
             <div id="osmPanel" style="display: none;">
                 <textarea name="textMapArea" id="osmDataContainer" placeholder="Paste OSM data here" rows="10"
@@ -50,6 +50,7 @@
     <script src="js/math/osm.js"></script>
     <script src="js/viewport.js"></script>
     <script src="js/markings/marking.js"></script>
+    <script src="js/markings/delete.js"></script>
     <script src="js/markings/start.js"></script>
     <script src="js/markings/stop.js"></script>
     <script src="js/markings/crossing.js"></script>
@@ -59,6 +60,7 @@
     <script src="js/markings/parking.js"></script>
     <script src="js/editors/markingEditor.js"></script>
     <script src="js/editors/graphEditor.js"></script>
+    <script src="js/editors/deleteEditor.js"></script>
     <script src="js/editors/stopEditor.js"></script>
     <script src="js/editors/startEditor.js"></script>
     <script src="js/editors/crossingEditor.js"></script>
