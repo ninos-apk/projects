@@ -29,25 +29,29 @@ flex-wrap: wrap;
 justify-content: center;
 align-items: center;
 height: 10svh;
-gap: 5px;
+gap: 2px;
 background-color:burlywood;
 }
 
-button{
+button, .file-input-lable{
     font-size: large;
     background-color: white;
     border: none;
     border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
     cursor: pointer;
 }
 #deleteBtn{
     visibility: hidden;
 }
-@media (orientation: portrait) and (pointer: coarse){
+
+@media (pointer: coarse){
     #deleteBtn{
         visibility: visible;
     }
 }
+
 .file-input-lable{
     font-size: large;
     width: 35px;

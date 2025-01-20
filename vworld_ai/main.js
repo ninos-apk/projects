@@ -19,6 +19,8 @@ if (window.matchMedia("(max-width: 768px)").matches) {
     screenSize = 'phone';
 }
 
+console.log(screenSize);
+
 function setCanvasSize() {
     if (screenSize === 'phone') {
         carCanvas.width = window.innerWidth;
@@ -27,6 +29,16 @@ function setCanvasSize() {
 
         carCanvas.height = window.innerHeight * 0.7;
         networkCanvas.height = window.innerHeight * 0.3;
+        miniMapCanvas.height = window.innerHeight * 0.2;
+        return;
+    }
+    if (screenSize === 'ipad') {
+        carCanvas.width = window.innerWidth;
+        networkCanvas.width = window.innerWidth * 0.3;
+        miniMapCanvas.width = window.innerWidth * 0.3;
+
+        carCanvas.height = window.innerHeight * 0.8;
+        networkCanvas.height = window.innerHeight * 0.2;
         miniMapCanvas.height = window.innerHeight * 0.2;
         return;
     }
@@ -69,11 +81,13 @@ if(N){
     
 }
 
-const cars = N?generateCars(N):generateCars(1);
+const cars = N==false?generateCars(1):generateCars(N);
 let bestCar = cars[0];
-if (localStorage.getItem("bestBrainAI")) {
+const bestBrain = localStorage.getItem("bestBrainAI");
+if (bestBrain) {
+    console.log("best brain found and loaded");
     for (let i = 0; i < cars.length; i++) {
-        cars[i].brain = JSON.parse(localStorage.getItem("bestBrainAI"));
+        cars[i].brain = JSON.parse(bestBrain);
         if (i != 0) {
             NeuralNetwork.mutate(cars[i].brain, 0.1);
         }

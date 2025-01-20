@@ -51,11 +51,11 @@ window.addEventListener('resize', function () {
 });
 
 const N = localStorage.getItem("generatedCars");
-if(N){
+if (N) {
     carsNumber.value = N;
 }
 
-const cars = N?generateCars(N):generateCars(1);
+const cars = N == false ? generateCars(1) : generateCars(N);
 
 let traffic = [];
 let y = -300;
@@ -75,30 +75,17 @@ for (let i = 0; i < 10; i++) {
 }
 let bestCar = cars[0];
 let bestBrain = localStorage.getItem("bestBrain");
-if (bestBrain) {
-    console.log("best Brain Found in Local Storage")
-    for (let i = 0; i < cars.length; i++) {
+
+for (let i = 0; i < cars.length; i++) {
+    if (bestBrain) {
+        console.log("best Brain Found in Local Storage")
         cars[i].brain = JSON.parse(bestBrain);
-        if (i != 0) {
-            NeuralNetwork.mutate(cars[i].brain, 0.1);
-        }
+    } else {
+        console.log("Default best Brains loaded")
+        cars[i].brain = bestBrainData;
     }
-}
-else {
-    console.log("Default best Brains loaded")
-    bestBrain = JSON.stringify(bestBrainData);
-    const bestBrain2 = JSON.stringify(bestBrainData2);
-    for (let i = 0; i < cars.length / 2; i++) {
-        cars[i].brain = JSON.parse(bestBrain);
-        if (i != 0) {
-            NeuralNetwork.mutate(cars[i].brain, 0.1);
-        }
-    }
-    for (let i = cars.length / 2; i < cars.length; i++) {
-        cars[i].brain = JSON.parse(bestBrain2);
-        if (i != 0) {
-            NeuralNetwork.mutate(cars[i].brain, 0.1);
-        }
+    if (i != 0) {
+        NeuralNetwork.mutate(cars[i].brain, 0.1);
     }
 }
 
@@ -113,19 +100,19 @@ function discard() {
 }
 function reload() {
     let val = carsNumber.value;
-    if(isNaN(val)){
+    if (isNaN(val)) {
         val = 1;
     }
-    if(val>999){
+    if (val > 999) {
         val = 999;
     }
-    localStorage.setItem("generatedCars",val);
+    localStorage.setItem("generatedCars", val);
     window.location.reload();
 }
 
-function generateCars(N) {
+function generateCars(n) {
     const cars = [];
-    for (let i = 0; i < N; i++) {
+    for (let i = 0; i < n; i++) {
         cars.push(new Car(road.getLaneCenter(1), 100, 30, 50, "AI"));
     }
     return cars;
