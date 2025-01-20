@@ -50,12 +50,16 @@ window.addEventListener('resize', function () {
     animate();
 });
 
-const N = localStorage.getItem("generatedCars");
-if (N) {
+const N = parseInt(localStorage.getItem("generatedCars"));
+
+if (N > 0) {
     carsNumber.value = N;
 }
+else {
+    carsNumber.value = 1;
+}
 
-const cars = N == false ? generateCars(1) : generateCars(N);
+const cars = N > 0 ? generateCars(N) : generateCars(1);
 
 let traffic = [];
 let y = -300;
@@ -82,7 +86,7 @@ for (let i = 0; i < cars.length; i++) {
         cars[i].brain = JSON.parse(bestBrain);
     } else {
         console.log("Default best Brains loaded")
-        cars[i].brain = bestBrainData;
+        cars[i].brain = JSON.parse(JSON.stringify(bestBrainData)); // Copy bestBrainData Object to mutate it for each car
     }
     if (i != 0) {
         NeuralNetwork.mutate(cars[i].brain, 0.1);

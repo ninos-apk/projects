@@ -18,9 +18,6 @@ if (window.matchMedia("(max-width: 1024px)").matches) {
 if (window.matchMedia("(max-width: 768px)").matches) {
     screenSize = 'phone';
 }
-
-console.log(screenSize);
-
 function setCanvasSize() {
     if (screenSize === 'phone') {
         carCanvas.width = window.innerWidth;
@@ -75,13 +72,17 @@ const graph = world.graph;
 const viewport = new Viewport(carCanvas, world.zoom, world.offset);
 const miniMap = new MiniMap(miniMapCanvas, world.graph);
 
-const N = localStorage.getItem("carsNumber");
-if(N){
+const N = parseInt(localStorage.getItem("carsNumber"));
+
+if (N > 0) {
     carsNumber.value = N;
-    
+}
+else {
+    carsNumber.value = 1;
 }
 
-const cars = N==false?generateCars(1):generateCars(N);
+const cars = N > 0 ? generateCars(N) : generateCars(1);
+
 let bestCar = cars[0];
 const bestBrain = localStorage.getItem("bestBrainAI");
 if (bestBrain) {
@@ -116,13 +117,13 @@ function discard() {
 
 function reload() {
     let val = carsNumber.value;
-    if(isNaN(val)){
+    if (isNaN(val)) {
         val = 1;
     }
-    if(val>999){
+    if (val > 999) {
         val = 999;
     }
-    localStorage.setItem("carsNumber",val);
+    localStorage.setItem("carsNumber", val);
     window.location.reload();
 }
 
